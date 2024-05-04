@@ -3,7 +3,7 @@
 
 const express = require('express');
 const router = express.Router();
-const tarotController = require('../controllers/tarotController');
+const tarotController = require('../controllers/tarotControllers');
 
 // Route pour récupérer la signification d'une carte spécifique
 router.get('/cards/:cardName', tarotController.getCardMeaning);

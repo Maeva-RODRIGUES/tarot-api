@@ -1,7 +1,7 @@
 // Ce fichier contient la logique métier pour les tirages de tarot.
 // tarotController.js
 
-const db = require('../database');
+//const db = require('../database');
 
 // Fonction pour récupérer la signification d'une carte spécifique
 exports.getCardMeaning = (req, res) => {

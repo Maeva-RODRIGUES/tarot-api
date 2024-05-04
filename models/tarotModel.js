@@ -1,7 +1,9 @@
 const { DataTypes, Sequelize } = require('sequelize');
-const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
-  dialect: 'mariadb'
+const config = require('../config/database');
+
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect
 });
 
 // Modèle de données pour les cartes de tarot
@@ -30,8 +32,10 @@ const TarotDrawing = sequelize.define('TarotDrawing', {
 });
 
 // Définir les relations entre les tables si nécessaire
-TarotDrawing.belongsTo(User); // Exemple : Un tirage appartient à un utilisateur
-TarotDrawing.belongsTo(Theme); // Exemple : Un tirage est associé à un thème
+// Par exemple : Un tirage appartient à un utilisateur
+// TarotDrawing.belongsTo(User);
+// Par exemple : Un tirage est associé à un thème
+// TarotDrawing.belongsTo(Theme);
 
 // Synchroniser les modèles avec la base de données
 (async () => {
