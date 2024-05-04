@@ -1,8 +1,10 @@
 //Fichier principal de l'application Express.js où nous configurons notre serveur.
 // server.js
 
+//Intégrer la librairie express dans notre fichier server.js
 const express = require('express');
 const app = express();
+
 const tarotRoutes = require('./routes/tarotRoutes');
 
 // Middleware pour traiter les requêtes JSON

@@ -1,46 +1,50 @@
+// ce fichier contient les modèles definis suivants : TarotCard : Ce modèle représente les cartes de tarot et contient des champs pour le nom de la carte, sa description et sa position.
+// TarotDrawing : Ce modèle représente les tirages de tarot et contient un champ pour la date du tirage.
+
+
+// Importation des modules Sequelize nécessaires
 const { DataTypes, Sequelize } = require('sequelize');
-const config = require('../config/database');
 
-const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect
-});
+// Importation de l'instance de connexion Sequelize configurée dans le fichier database.js
+const sequelize = require('../config/database');
 
-// Modèle de données pour les cartes de tarot
+// Définition du modèle de données pour les cartes de tarot
 const TarotCard = sequelize.define('TarotCard', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // La carte doit avoir un nom
   },
   description: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.TEXT, // Utilisez TEXT pour des descriptions plus longues
+    allowNull: false // La carte doit avoir une description
   },
   position: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false // La carte doit avoir une position
   }
 });
 
-// Modèle de données pour les tirages de tarot
+// Définition du modèle de données pour les tirages de tarot
 const TarotDrawing = sequelize.define('TarotDrawing', {
   date: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW
+    defaultValue: Sequelize.NOW // Date par défaut : maintenant
   }
-  // Ajoutez d'autres attributs si nécessaire
 });
 
-// Définir les relations entre les tables si nécessaire
-// Par exemple : Un tirage appartient à un utilisateur
-// TarotDrawing.belongsTo(User);
-// Par exemple : Un tirage est associé à un thème
-// TarotDrawing.belongsTo(Theme);
+// Définition des relations entre les tables
+TarotDrawing.belongsTo(TarotCard, { foreignKey: 'tarotCardId' });
+// Un tirage appartient à une carte de tarot
+// 'tarotCardId' est la clé étrangère qui sera ajoutée dans la table TarotDrawing
 
-// Synchroniser les modèles avec la base de données
+// Synchronisation des modèles avec la base de données
 (async () => {
   await sequelize.sync({ force: false });
+  // La méthode sync synchronise les modèles avec la base de données
+  // Si force est true, cela supprimera les tables existantes et les recréera
+  // Si force est false, cela ne fera rien si les tables existent déjà
   console.log('Les modèles ont été synchronisés avec la base de données.');
 })();
 
+// Exportation des modèles TarotCard et TarotDrawing pour les utiliser ailleurs dans l'application
 module.exports = { TarotCard, TarotDrawing };
