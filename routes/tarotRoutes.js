@@ -8,6 +8,6 @@ const tarotController = require('../controllers/tarotController');
 // Route pour récupérer la signification d'une carte spécifique
 router.get('/cards/:cardName', tarotController.getCardMeaning);
 
-// Ajoutez d'autres routes pour les fonctionnalités supplémentaires ici
+// Ajouts possibles
 
 module.exports = router;
