@@ -3,7 +3,7 @@
 
 const express = require('express');
 const router = express.Router();
-const tarotController = require('../controllers/tarotController');
+const tarotController = require('../controllers/tarotControllers');
 
 // Route pour effectuer un tirage de tarot
 router.get('/draw', tarotController.drawCards);

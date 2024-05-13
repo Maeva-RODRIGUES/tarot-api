@@ -1,4 +1,4 @@
-// Intégrer la librairie express dans notre fichier server.js
+// Importer la bibliothèque express
 const express = require('express');
 const app = express();
 const tarotRoutes = require('./routes/tarotRoutes');
@@ -8,6 +8,9 @@ const dbConfig = require('./config/database');
 
 // Importer Sequelize
 const { Sequelize } = require('sequelize');
+
+// Importer la bibliothèque portfinder
+const portfinder = require('portfinder');
 
 // Middleware pour traiter les requêtes JSON
 app.use(express.json());
@@ -27,20 +30,28 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
   port: dbConfig.port
 });
 
-// Établir la connexion à la base de données
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connexion à la base de données établie avec succès.');
-  })
-  .catch(err => {
-    console.error('Impossible de se connecter à la base de données:', err);
-  });
+// Utiliser portfinder pour obtenir un port disponible automatiquement
+portfinder.getPort((err, port) => {
+  if (err) {
+    console.error('Erreur lors de la recherche du port disponible :', err);
+    return;
+  }
 
-// Port d'écoute du serveur
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Serveur démarré sur le port ${port}`);
+  // Établir la connexion à la base de données
+  sequelize.authenticate()
+    .then(() => {
+      console.log('Connexion à la base de données établie avec succès.');
+
+      // Démarrer le serveur sur le port obtenu
+      app.listen(port, () => {
+        console.log(`Serveur démarré sur le port ${port}`);
+      });
+    })
+    .catch(err => {
+      console.error('Impossible de se connecter à la base de données:', err);
+    });
 });
+
 
 
 
