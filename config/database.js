@@ -3,8 +3,8 @@
 
 module.exports = {
     database: 'tarot_db',
-    username: 'root',
-    password: '', // Mot de passe vide
+    username: 'tarot_db',
+    password: '-z5(rPxTUa3OtV54', // Mot de passe
     host: 'localhost',
     dialect: 'mariadb',
     port: 3306 // Le port par défaut pour MariaDB est 3306
