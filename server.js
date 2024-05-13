@@ -31,27 +31,24 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
 });
 
 // Utiliser portfinder pour obtenir un port disponible automatiquement
-portfinder.getPort((err, port) => {
-  if (err) {
-    console.error('Erreur lors de la recherche du port disponible :', err);
-    return;
-  }
+portfinder.getPortPromise()
+  .then((port) => {
+    // Établir la connexion à la base de données
+    sequelize.authenticate()
+      .then(() => {
+        // console.log('Connexion à la base de données établie avec succès.');
 
-  // Établir la connexion à la base de données
-  sequelize.authenticate()
-    .then(() => {
-      console.log('Connexion à la base de données établie avec succès.');
-
-      // Démarrer le serveur sur le port obtenu
-      app.listen(port, () => {
-        console.log(`Serveur démarré sur le port ${port}`);
+        // Démarrer le serveur sur le port obtenu
+        app.listen(port, () => {
+        //   console.log(`Serveur démarré sur le port ${port}`);
+        });
+      })
+      .catch(err => {
+        // console.error('Impossible de se connecter à la base de données:', err);
       });
-    })
-    .catch(err => {
-      console.error('Impossible de se connecter à la base de données:', err);
-    });
-});
+  })
+  .catch((err) => {
+    // console.error('Erreur lors de la recherche du port disponible :', err);
+  })
 
-
-
-
+  module.exports = app; 
