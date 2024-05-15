@@ -8,4 +8,8 @@ const tarotController = require('../controllers/tarotControllers');
 // Route pour effectuer un tirage de tarot
 router.get('/draw', tarotController.drawCards);
 
+// Route pour effectuer un tirage de tarot aléatoire
+router.get('/draw-random', tarotController.drawRandomCards);
+
+
 module.exports = router;

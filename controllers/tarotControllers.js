@@ -3,6 +3,12 @@
 
 const tarotData = require('../tarotData.json');
 
+// Fonction pour sélectionner une carte aléatoire dans le jeu de tarot
+function drawRandomCard(tarotDeck) {
+    const randomIndex = Math.floor(Math.random() * tarotDeck.length);
+    return tarotDeck[randomIndex];
+}
+
 // Fonction pour effectuer un tirage de tarot
 exports.drawCards = async (req, res) => {
     try {
@@ -29,8 +35,19 @@ exports.drawCards = async (req, res) => {
     }
 };
 
-// Fonction pour tirer une carte aléatoire à partir du jeu de tarot
-function drawRandomCard(deck) {
-    const randomIndex = Math.floor(Math.random() * deck.length);
-    return deck[randomIndex];
-}
+// Fonction pour effectuer un tirage de tarot aléatoire
+exports.drawRandomCards = async (req, res) => {
+    try {
+        // échantillon données 22 arcanes majeures
+        const tarotDeck = tarotData;
+        
+        // Sélection aléatoire d'une carte
+        const randomCard = drawRandomCard(tarotDeck);
+
+        // Envoyer la réponse au client avec la carte tirée
+        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', card: randomCard });
+    } catch (error) {
+        // En cas d'erreur, renvoyer un message d'erreur au client
+        res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
+    }
+};

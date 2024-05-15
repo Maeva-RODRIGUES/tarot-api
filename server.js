@@ -1,5 +1,8 @@
+//server.js
+
 // Importer la bibliothèque express
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 const tarotRoutes = require('./routes/tarotRoutes');
 
@@ -27,8 +30,10 @@ app.get('/', (req, res) => {
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
   host: dbConfig.host,
   dialect: dbConfig.dialect,
-  port: dbConfig.port
+  port: dbConfig.port,
+  logging: false // cette option désactive la journalisation des requêtes SQL (SELECT 1+1 AS result)
 });
+
 
 // Utiliser portfinder pour obtenir un port disponible automatiquement
 portfinder.getPortPromise()
@@ -40,15 +45,15 @@ portfinder.getPortPromise()
 
         // Démarrer le serveur sur le port obtenu
         app.listen(port, () => {
-        //   console.log(`Serveur démarré sur le port ${port}`);
+        console.log(`Serveur démarré sur le port ${port}`);
         });
       })
       .catch(err => {
-        // console.error('Impossible de se connecter à la base de données:', err);
+         console.error('Impossible de se connecter à la base de données:', err);
       });
   })
   .catch((err) => {
-    // console.error('Erreur lors de la recherche du port disponible :', err);
+    console.error('Erreur lors de la recherche du port disponible :', err);
   })
 
   module.exports = app; 
