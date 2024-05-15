@@ -60,7 +60,8 @@ exports.drawThemeCards = async (req, res) => {
         const randomCardName = themeCardsNames[randomIndex];
 
         // Rechercher la carte dans le jeu de tarot
-        const randomCard = tarotDeck.find(card => card.name === randomCardName);
+        const randomCard = tarotDeck.find(card => card.cards === randomCardName);
+
 
         // Envoyer la réponse au client avec la carte tirée pour le thème choisi
         res.json({ message: `Tirage de tarot pour le thème ${theme} effectué avec succès`, cards: [randomCard] });

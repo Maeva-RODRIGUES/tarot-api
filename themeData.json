@@ -1,14 +1,14 @@
 {
     "love": {
-      "cards": ["The Lovers", "The Emperor", "The Chariot"],
-      "interpretation": "Ce tirage met en lumière les aspects de l'amour dans votre vie. Il représente les relations affectives, les partenariats et les émotions liées à l'amour. Les cartes tirées révèlent des insights sur votre relation actuelle, les défis que vous pourriez rencontrer ou les opportunités romantiques à venir."
+        "cards": ["The Lovers", "The Emperor", "The Chariot"],
+        "interpretation": "Ce tirage met en lumière les aspects de l'amour dans votre vie. Il représente les relations affectives, les partenariats et les émotions liées à l'amour. Les cartes tirées révèlent des insights sur votre relation actuelle, les défis que vous pourriez rencontrer ou les opportunités romantiques à venir."
     },
     "work": {
-      "cards": ["The Magician", "The High Priestess", "The Empress"],
-      "interpretation": "Ce tirage se concentre sur votre carrière et vos aspirations professionnelles. Il met en avant votre trajectoire professionnelle, vos ambitions professionnelles et votre succès dans le monde du travail. Les cartes tirées peuvent révéler des informations sur vos talents innés, vos opportunités de carrière et les défis professionnels que vous pourriez rencontrer."
+        "cards": ["The Magician", "The High Priestess", "The Empress"],
+        "interpretation": "Ce tirage se concentre sur votre carrière et vos aspirations professionnelles. Il met en avant votre trajectoire professionnelle, vos ambitions professionnelles et votre succès dans le monde du travail. Les cartes tirées peuvent révéler des informations sur vos talents innés, vos opportunités de carrière et les défis professionnels que vous pourriez rencontrer."
     },
     "spiritual": {
-      "cards": ["The Hierophant", "The Chariot", "The Star"],
-      "interpretation": "Ce tirage explore les aspects spirituels de votre être, mettant en lumière votre connexion intérieure, votre croissance personnelle et votre quête de sagesse spirituelle. Les cartes tirées révèlent des insights sur votre cheminement spirituel, votre connexion avec votre moi intérieur et les leçons spirituelles que vous devez apprendre."
+        "cards": ["The Hierophant", "The Chariot", "The Star"],
+        "interpretation": "Ce tirage explore les aspects spirituels de votre être, mettant en lumière votre connexion intérieure, votre croissance personnelle et votre quête de sagesse spirituelle. Les cartes tirées révèlent des insights sur votre cheminement spirituel, votre connexion avec votre moi intérieur et les leçons spirituelles que vous devez apprendre."
     }
-  }
+}

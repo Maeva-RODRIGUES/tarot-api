@@ -3,7 +3,7 @@
 
 
 // Importe les fonctions à tester depuis tarotController.js
-const { drawCards, drawRandomCards } = require('../controllers/tarotControllers');
+const { drawCards, drawRandomCards, drawThemeCards } = require('../controllers/tarotControllers');
 
 // Tests pour drawCards
 test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
@@ -30,17 +30,37 @@ test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
 // Tests pour drawRandomCards
 test('drawRandomCards renvoie un tirage de tarot aléatoire avec une seule carte', () => {
     // Mock Express request et response objects
-    const req = null;
+    const req = { params: { theme: 'love' } }; // Simulation d'un thème 'love' pour le test
     const res = {
         json: jest.fn()
     };
 
-    // Appelle drawRandomCards
+    // Appeler la fonction drawRandomCards avec les objets request et response simulés
     drawRandomCards(req, res);
 
-    // Vérifie si la réponse contient les clés attendues
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+    // Vérifier si la fonction json du mock response a été appelée avec les bonnes données
+    expect(res.json).toHaveBeenCalledWith({
         message: 'Tirage de tarot aléatoire effectué avec succès',
-        card: expect.any(Object)
+        card: expect.any(Object) // On doit recevoir une carte, donc on vérifie qu'elle est de type objet
+    });
+});
+
+// Tests pour drawThemeCards
+test('drawThemeCards renvoie un tirage de tarot pour un thème donné', () => {
+    // Mock Express request et response objects
+    const req = { params: { theme: 'love' } }; // Simulation d'un thème 'love' pour le test
+    const res = {
+        json: jest.fn()
+    };
+
+    // Appeler la fonction drawThemeCards avec les objets request et response simulés
+    drawThemeCards(req, res);
+
+    // Vérifier si la fonction json du mock response a été appelée avec les bonnes données
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+        message: 'Tirage de tarot pour le thème love effectué avec succès',
+        cards: expect.arrayContaining([
+            expect.any(Object) // On doit recevoir une carte, donc on vérifie qu'elle est de type objet
+        ])
     }));
 });
