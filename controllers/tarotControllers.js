@@ -1,14 +1,15 @@
 // tarotController.js
 
 const tarotData = require('../tarotData.json');
+const themeData = require('../themeData.json');
 
-// Fonction pour sélectionner une carte aléatoire dans le jeu de tarot
+// Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot
 function drawRandomCard(tarotDeck) {
     const randomIndex = Math.floor(Math.random() * tarotDeck.length);
     return tarotDeck[randomIndex];
 }
 
-// Fonction pour effectuer un tirage de tarot
+// Fonction drawCards pour effectuer un tirage de tarot
 exports.drawCards = async (req, res) => {
     try {
         const tarotDeck = tarotData;
@@ -42,31 +43,32 @@ exports.drawRandomCards = async (req, res) => {
     }
 };
 
-// Fonction pour effectuer un tirage de tarot en fonction du thème choisi
+// Fonction drawThemeCards pour effectuer un tirage de tarot en fonction du thème choisi
 exports.drawThemeCards = async (req, res) => {
     try {
         const tarotDeck = tarotData;
         const theme = req.params.theme;
 
-        // Logique pour choisir les cartes en fonction du thème
-          // Correspondance entre les thèmes et les cartes associées
-          const themeCardsMap = {
-            amour: ["The Lovers", "The Two of Cups", "The Ten of Cups"],
-            carriere: ["The Emperor", "The Magician", "The Ten of Pentacles"],
-            spiritualite: ["The High Priestess", "The Hierophant", "The Star"]
-        };
-
         // Vérifier si le thème choisi est valide
-        if (!(theme in themeCardsMap)) {
+        if (!(theme in themeData)) {
             return res.status(400).json({ message: "Thème invalide" });
         }
 
+        // Sélection aléatoire d'une carte associée au thème choisi
+        const themeCardsNames = themeData[theme];
+        const randomIndex = Math.floor(Math.random() * themeCardsNames.length);
+        const randomCardName = themeCardsNames[randomIndex];
+
+        // Rechercher la carte dans le jeu de tarot
+        const randomCard = tarotDeck.find(card => card.name === randomCardName);
+
+
         // Sélectionner les cartes associées au thème choisi
-        const themeCardsNames = themeCardsMap[theme];
-        const themeCards = themeCardsNames.map(cardName => {
-            // Rechercher la carte dans le jeu de tarot
-            return tarotDeck.find(card => card.name === cardName);
-        });
+        // const themeCardsNames = themeData[theme];
+        // const themeCards = themeCardsNames.map(cardName => {
+        //     // Rechercher la carte dans le jeu de tarot
+        //     return tarotDeck.find(card => card.name === cardName);
+        // });
 
         // Envoyer la réponse au client avec les cartes tirées pour le thème choisi
         res.json({ message: `Tirage de tarot pour le thème ${theme} effectué avec succès`, cards: themeCards });
@@ -75,5 +77,3 @@ exports.drawThemeCards = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors du tirage de tarot pour le thème choisi', error });
     }
 };
-        
-  
