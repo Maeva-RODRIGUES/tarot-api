@@ -1,4 +1,3 @@
-// Ce fichier contient la logique métier pour les tirages de tarot.
 // tarotController.js
 
 const tarotData = require('../tarotData.json');
@@ -42,3 +41,39 @@ exports.drawRandomCards = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
     }
 };
+
+// Fonction pour effectuer un tirage de tarot en fonction du thème choisi
+exports.drawThemeCards = async (req, res) => {
+    try {
+        const tarotDeck = tarotData;
+        const theme = req.params.theme;
+
+        // Logique pour choisir les cartes en fonction du thème
+          // Correspondance entre les thèmes et les cartes associées
+          const themeCardsMap = {
+            amour: ["The Lovers", "The Two of Cups", "The Ten of Cups"],
+            carriere: ["The Emperor", "The Magician", "The Ten of Pentacles"],
+            spiritualite: ["The High Priestess", "The Hierophant", "The Star"]
+        };
+
+        // Vérifier si le thème choisi est valide
+        if (!(theme in themeCardsMap)) {
+            return res.status(400).json({ message: "Thème invalide" });
+        }
+
+        // Sélectionner les cartes associées au thème choisi
+        const themeCardsNames = themeCardsMap[theme];
+        const themeCards = themeCardsNames.map(cardName => {
+            // Rechercher la carte dans le jeu de tarot
+            return tarotDeck.find(card => card.name === cardName);
+        });
+
+        // Envoyer la réponse au client avec les cartes tirées pour le thème choisi
+        res.json({ message: `Tirage de tarot pour le thème ${theme} effectué avec succès`, cards: themeCards });
+    } catch (error) {
+        // En cas d'erreur, renvoyer un message d'erreur au client
+        res.status(500).json({ message: 'Erreur lors du tirage de tarot pour le thème choisi', error });
+    }
+};
+        
+  

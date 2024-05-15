@@ -11,5 +11,8 @@ router.get('/draw', tarotController.drawCards);
 // Route pour effectuer un tirage de tarot aléatoire
 router.get('/draw-random', tarotController.drawRandomCards);
 
+// Route pour gérer le tirage de cartes en fonction du thème choisi :
+router.get('/draw-theme/:theme', tarotController.drawThemeCards);
+
 
 module.exports = router;
