@@ -12,23 +12,15 @@ function drawRandomCard(tarotDeck) {
 // Fonction pour effectuer un tirage de tarot
 exports.drawCards = async (req, res) => {
     try {
-        // échantillon données 22 arcanes majeures
         const tarotDeck = tarotData;
         
-        // Sélection aléatoire de trois cartes pour le passé, le présent et le futur
+        // Sélection aléatoire de trois cartes
         const pastCard = drawRandomCard(tarotDeck);
         const presentCard = drawRandomCard(tarotDeck);
         const futureCard = drawRandomCard(tarotDeck);
 
-        // Création de l'interprétation des cartes
-        const tarotReading = {
-            past: `You drew ${pastCard.name}. ${pastCard.meaning}`,
-            present: `You drew ${presentCard.name}. ${presentCard.meaning}`,
-            future: `You drew ${futureCard.name}. ${futureCard.meaning}`
-        };
-
-        // Envoyer la réponse au client
-        res.json({ message: 'Tirage de tarot effectué avec succès', tarotReading });
+        // Envoyer la réponse au client avec les cartes tirées
+        res.json({ message: 'Tirage de tarot effectué avec succès', cards: [pastCard, presentCard, futureCard] });
     } catch (error) {
         // En cas d'erreur, renvoyer un message d'erreur au client
         res.status(500).json({ message: 'Erreur lors du tirage de tarot', error });
@@ -38,7 +30,6 @@ exports.drawCards = async (req, res) => {
 // Fonction pour effectuer un tirage de tarot aléatoire
 exports.drawRandomCards = async (req, res) => {
     try {
-        // échantillon données 22 arcanes majeures
         const tarotDeck = tarotData;
         
         // Sélection aléatoire d'une carte

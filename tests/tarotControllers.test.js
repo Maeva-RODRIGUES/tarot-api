@@ -1,25 +1,46 @@
-//test unitaire de la fonction du tirage aléatoire drawCards
+// test unitaire des fonctions de tirages
 // tarotControllers.test.js
 
-const { drawCards } = require('../controllers/tarotControllers');
-const tarotData = require('../tarotData.json');
 
-test('Draw cards returns correct JSON response', () => {
-    // Mock Express response object
+// Importe les fonctions à tester depuis tarotController.js
+const { drawCards, drawRandomCards } = require('../controllers/tarotControllers');
+
+// Tests pour drawCards
+test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
+    // Mock Express request et response objects
+    const req = null;
     const res = {
         json: jest.fn()
     };
 
-    // Call drawCards function
-    drawCards(null, res);
+    // Appelle drawCards
+    drawCards(req, res);
 
-    // Check if response JSON contains the expected keys
+    // Vérifie si la réponse contient les clés attendues
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
         message: 'Tirage de tarot effectué avec succès',
-        tarotReading: expect.objectContaining({
-            past: expect.stringContaining('You drew'),
-            present: expect.stringContaining('You drew'),
-            future: expect.stringContaining('You drew')
-        })
+        cards: expect.arrayContaining([
+            expect.any(Object),
+            expect.any(Object),
+            expect.any(Object)
+        ])
+    }));
+});
+
+// Tests pour drawRandomCards
+test('drawRandomCards renvoie un tirage de tarot aléatoire avec une seule carte', () => {
+    // Mock Express request et response objects
+    const req = null;
+    const res = {
+        json: jest.fn()
+    };
+
+    // Appelle drawRandomCards
+    drawRandomCards(req, res);
+
+    // Vérifie si la réponse contient les clés attendues
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+        message: 'Tirage de tarot aléatoire effectué avec succès',
+        card: expect.any(Object)
     }));
 });

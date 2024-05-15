@@ -1,7 +1,7 @@
 // Contient les routes de l'API pour les opérations de tirage de tarot.
 // tarotRoutes.js
 
-const express = require('express');
+const express = require ('express');
 const router = express.Router();
 const tarotController = require('../controllers/tarotControllers');
 
