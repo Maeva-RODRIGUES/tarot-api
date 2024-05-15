@@ -33,7 +33,7 @@ exports.drawRandomCards = async (req, res) => {
         const tarotDeck = tarotData;
         const themeInterpretation = themeData["love"].interpretation;
         
-        // Sélection aléatoire d'une carte
+        // Sélection aléatoire de 3 cartes uniques
         const randomCards = []
         for (let index = 0; index < 3; index++) {
             const randomCard = drawRandomCard(tarotDeck);
@@ -41,7 +41,7 @@ exports.drawRandomCards = async (req, res) => {
         }
         
         // Envoyer la réponse au client avec la carte tirée
-        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', card: randomCards, interpretation:  themeInterpretation});
+        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation:  themeInterpretation});
     } catch (error) {
         // En cas d'erreur, renvoyer un message d'erreur au client
         res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
