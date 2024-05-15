@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "Maëva RODRIGUES",
@@ -19,6 +19,7 @@
     "mariadb": "^3.3.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.9.7",
+    "nodemon": "^3.1.0",
     "portfinder": "^1.0.32",
     "sequelize": "^6.37.3"
   },
