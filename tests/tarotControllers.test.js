@@ -41,7 +41,8 @@ test('drawRandomCards renvoie un tirage de tarot aléatoire avec trois cartes', 
     // Vérifier si la fonction json du mock response a été appelée avec les bonnes données
     expect(res.json).toHaveBeenCalledWith({
         message: 'Tirage de tarot aléatoire effectué avec succès',
-        cards: expect.any(Array) // On vérifie juste qu'il y a un tableau de cartes
+        cards: expect.any(Array), // On vérifie juste qu'il y a un tableau de cartes
+        interpretation: expect.any(String)
     });
 });
 
@@ -61,8 +62,18 @@ test('drawThemeCards renvoie un tirage de tarot pour un thème donné', () => {
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
         message: 'Tirage de tarot pour le thème love effectué avec succès',
         cards: expect.arrayContaining([
-            expect.any(Object) // On doit recevoir une carte, donc on vérifie qu'elle est de type objet
+            expect.objectContaining({
+                name: expect.any(String),
+                meaning: expect.any(String)
+            }),
+            expect.objectContaining({
+                name: expect.any(String),
+                meaning: expect.any(String)
+            }),
+            expect.objectContaining({
+                name: expect.any(String),
+                meaning: expect.any(String)
+            })
         ])
     }));
 });
-

@@ -27,26 +27,25 @@ exports.drawCards = async (req, res) => {
     }
 };
 
-// Fonction pour effectuer un tirage de tarot aléatoire
+// Fonction pour effectuer un tirage de tarot aléatoire basé sur le thème "love"
 exports.drawRandomCards = async (req, res) => {
-    try {
-        const tarotDeck = tarotData;
-        const themeInterpretation = themeData["love"].interpretation;
-        
-        // Sélection aléatoire de 3 cartes uniques
-        const randomCards = []
-        for (let index = 0; index < 3; index++) {
-            const randomCard = drawRandomCard(tarotDeck);
-            randomCards.push(randomCard)
-        }
-        
-        // Envoyer la réponse au client avec la carte tirée
-        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation:  themeInterpretation});
-    } catch (error) {
-        // En cas d'erreur, renvoyer un message d'erreur au client
-        res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
+    const loveThemeCards = themeData["love"].cards;
+    const themeInterpretation = themeData["love"].interpretation;
+    const tarotDeck = tarotData.filter(card => loveThemeCards.includes(card.name));
+    
+    // Sélection aléatoire de 3 cartes uniques
+    const randomCards = []
+    for (let index = 0; index < 3; index++) {
+        const randomCard = drawRandomCard(tarotDeck);
+        randomCards.push(randomCard)
     }
-};
+    
+
+    // Envoyer la réponse au client avec les cartes tirées du thème "love"
+    res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation: themeInterpretation}); 
+    // clé cards est utilisée pour stocker les cartes tirées aléatoirement du thème "love". Elle est incluse dans la réponse JSON retournée par la fonction
+    //clé interpretation stocke l'interprétation associé au thème love incluse dans la réponse JSON retournée par la fonction
+}; 
 
 // Fonction drawThemeCards pour effectuer un tirage de tarot en fonction du thème choisi
 exports.drawThemeCards = async (req, res) => {
@@ -62,19 +61,18 @@ exports.drawThemeCards = async (req, res) => {
         const themeInterpretation = themeData[theme].interpretation;
         const tarotDeck = tarotData;
 
-    // Sélection aléatoire de trois cartes associées au thème choisi
-    const randomCards = [];
-    while (randomCards.length < 3) {
-        const randomIndex = Math.floor(Math.random() * themeCardsNames.length);
-        const randomCardName = themeCardsNames[randomIndex];
-        const randomCard = tarotDeck.find(card => card.name === randomCardName);
-        // Vérifier si la carte tirée n'est pas déjà dans randomCards
-        if (!randomCards.some(card => card.name === randomCard.name)) {
-            randomCards.push(randomCard);
+        // Sélection aléatoire de trois cartes associées au thème choisi
+        const randomCards = [];
+        while (randomCards.length < 3) {
+            const randomIndex = Math.floor(Math.random() * themeCardsNames.length);
+            const randomCardName = themeCardsNames[randomIndex];
+            const randomCard = tarotDeck.find(card => card.name === randomCardName);
+            // Vérifier si la carte tirée n'est pas déjà dans randomCards
+            if (!randomCards.some(card => card.name === randomCard.name)) {
+                randomCards.push(randomCard);
+            }
         }
-    }
 
-        console.log(randomCards)
         // Envoyer la réponse au client avec les cartes tirées et leur interprétation
         res.json({ message: `Tirage de tarot pour le thème ${theme} effectué avec succès`, cards: randomCards, interpretation: themeInterpretation });
     } catch (error) {
