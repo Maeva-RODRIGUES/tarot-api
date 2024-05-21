@@ -7,7 +7,7 @@ const app = express();
 const tarotRoutes = require('./routes/tarotRoutes');
 
 // Importer la configuration de la base de données
-const dbConfig = require('./config/database');
+const dbConfig = require('./config/connexionDatabase');
 
 // Importer Sequelize
 const { Sequelize } = require('sequelize');

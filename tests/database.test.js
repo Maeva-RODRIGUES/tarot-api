@@ -2,7 +2,7 @@
 const { Sequelize } = require('sequelize');
 
 // Importez la configuration de la base de données
-const dbConfig = require('../config/database');
+const dbConfig = require('../config/connexionDatabase');
 
 describe('Database Connection Test', () => {
   let sequelize;

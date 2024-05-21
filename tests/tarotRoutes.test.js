@@ -4,7 +4,7 @@
 const request = require('supertest');
 const app = require('../server');
 const { Sequelize } = require('sequelize');
-const dbConfig = require('../config/database');
+const dbConfig = require('../config/connexionDatabase');
 
 const tarotData = require('../tarotData.json');
 const themeData = require('../themeData.json');

@@ -1,5 +1,5 @@
 // Configuration de la connexion à la base de données MariaDB :
-// database.js
+// connexionDatabase.js
 
 module.exports = {
     database: 'tarot_db',
