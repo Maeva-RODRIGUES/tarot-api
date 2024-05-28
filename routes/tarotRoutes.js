@@ -3,22 +3,13 @@
 
 const express = require('express');
 const router = express.Router();
-const cardsData = require('../db/cards');
+const tarotControllers = require('../controllers/tarotControllers');
 
 // Route pour récupérer toutes les cartes du tarot
-router.get('/cards', (req, res) => {
-    res.json(cardsData);
-});
+router.get('/cards', tarotControllers.getAllCards);
 
 // Route pour récupérer une carte spécifique par son ID
-router.get('/cards/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const card = cardsData.find(card => card.id === id);
-    if (card) {
-        res.json(card);
-    } else {
-        res.status(404).send('Carte non trouvée');
-    }
-});
+router.get('/cards/:id', tarotControllers.getCardById);
+
 
 module.exports = router;

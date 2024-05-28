@@ -1,7 +1,6 @@
-// drawingsController.js
+// drawingsController.js : logique métier des tirages de cartes
 
-const tarotData = require('../tarotData.json');
-const themeData = require('../themeData.json');
+const cardsData = require('../db/cards');
 
 // Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot
 function drawRandomCard(tarotDeck) {
@@ -12,7 +11,7 @@ function drawRandomCard(tarotDeck) {
 // Fonction drawCards pour effectuer un tirage de tarot
 exports.drawCards = async (req, res) => {
     try {
-        const tarotDeck = tarotData;
+        const tarotDeck = cardsData;
         
         // Sélection aléatoire de trois cartes
         const pastCard = drawRandomCard(tarotDeck);
