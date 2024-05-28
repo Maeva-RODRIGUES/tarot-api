@@ -4,7 +4,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const tarotRoutes = require('./routes/tarotRoutes');
+const drawingsRoutes = require('./routes/drawingsRoutes');
+const cardsData = require('./db/cards');
+
+// console.log(cardsData[2])
+
+
 
 // Importer la configuration de la base de données
 const dbConfig = require('./config/connexionDatabase');
@@ -19,7 +24,7 @@ const portfinder = require('portfinder');
 app.use(express.json());
 
 // Utilisation des routes pour les tirages de tarot
-app.use('/api/tarot', tarotRoutes);
+app.use('/api/tarot', drawingsRoutes);
 
 // Route de base pour afficher un message de bienvenue lorsque quelqu'un accède à la racine de l'API.
 app.get('/', (req, res) => {

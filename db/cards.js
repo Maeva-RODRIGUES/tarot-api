@@ -1,3 +1,5 @@
+// Données des 22 arcanes majeures du tarot Rider-Wait
+
 const cards = [
     {
         id: 0,
@@ -154,3 +156,5 @@ const cards = [
         keyword3: "Intégration"
     }
 ];
+
+module.exports = cards

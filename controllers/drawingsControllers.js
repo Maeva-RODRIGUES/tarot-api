@@ -1,4 +1,4 @@
-// tarotController.js
+// drawingsController.js
 
 const tarotData = require('../tarotData.json');
 const themeData = require('../themeData.json');

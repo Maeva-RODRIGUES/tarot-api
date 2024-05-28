@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "nodemon server.js"
+    "start": "npx nodemon server.js"
   },
   "keywords": [],
   "author": "Maëva RODRIGUES",
