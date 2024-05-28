@@ -3,7 +3,7 @@
 
 
 // Importe les fonctions à tester depuis tarotController.js
-const { drawCards, drawRandomCards, drawThemeCards } = require('../controllers/tarotControllers');
+const { drawCards, drawRandomCards, drawThemeCards } = require('../controllers/drawingsControllers');
 
 // Tests pour drawCards
 test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
@@ -30,7 +30,7 @@ test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
 // Tests pour drawRandomCards
 test('drawRandomCards renvoie un tirage de tarot aléatoire avec trois cartes', () => {
     // Mock Express request et response objects
-    const req = { params: { theme: 'love' } }; // Simulation d'un thème 'love' pour le test
+    const req = { params: { theme: 'Amour' } }; // Simulation d'un thème 'Amour' pour le test
     const res = {
         json: jest.fn()
     };
@@ -50,7 +50,7 @@ test('drawRandomCards renvoie un tirage de tarot aléatoire avec trois cartes', 
 // Tests pour drawThemeCards
 test('drawThemeCards renvoie un tirage de tarot pour un thème donné', () => {
     // Mock Express request et response objects
-    const req = { params: { theme: 'love' } }; // Simulation d'un thème 'love' pour le test
+    const req = { params: { theme: 'Amour' } }; // Simulation d'un thème 'Amour' pour le test
     const res = {
         json: jest.fn()
     };

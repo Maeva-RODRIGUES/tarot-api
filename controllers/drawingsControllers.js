@@ -1,6 +1,8 @@
 // drawingsController.js : logique métier des tirages de cartes
 
 const cardsData = require('../db/cards');
+const themes = require ('../db/themes');
+
 
 // Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot
 function drawRandomCard(tarotDeck) {
@@ -28,54 +30,66 @@ exports.drawCards = async (req, res) => {
 
 // Fonction pour effectuer un tirage de tarot aléatoire basé sur le thème "love"
 exports.drawRandomCards = async (req, res) => {
-    const loveThemeCards = themeData["love"].cards;
-    const themeInterpretation = themeData["love"].interpretation;
-    const tarotDeck = tarotData.filter(card => loveThemeCards.includes(card.name));
-    
-    // Sélection aléatoire de 3 cartes uniques
-    const randomCards = []
-    for (let index = 0; index < 3; index++) {
-        const randomCard = drawRandomCard(tarotDeck);
-        randomCards.push(randomCard)
-    }
-    
+    try {
+        const themeName = "Amour"; // Le thème "Amour"
+        const theme = themes.find(t => t.title_theme === themeName);
 
-    // Envoyer la réponse au client avec les cartes tirées du thème "love"
-    res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation: themeInterpretation}); 
-    // clé cards est utilisée pour stocker les cartes tirées aléatoirement du thème "love". Elle est incluse dans la réponse JSON retournée par la fonction
-    //clé interpretation stocke l'interprétation associé au thème love incluse dans la réponse JSON retournée par la fonction
-}; 
+        if (!theme) {
+            return res.status(400).json({ message: "Thème 'Amour' non trouvé" });
+        }
+
+        const tarotDeck = cardsData.filter(card => theme.meaning_theme.includes(card.name));
+
+        // Sélection aléatoire de trois cartes
+        const randomCards = [];
+        while (randomCards.length < 3) {
+            const randomCard = drawRandomCard(tarotDeck);
+            if (!randomCards.some(card => card.name === randomCard.name)) {
+                randomCards.push(randomCard);
+            }
+        }
+
+        // Envoyer la réponse au client avec les cartes tirées du thème "Amour"
+        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation: theme.meaning_theme });
+    } catch (error) {
+        // En cas d'erreur, renvoyer un message d'erreur au client
+        res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
+    }
+};
 
 // Fonction drawThemeCards pour effectuer un tirage de tarot en fonction du thème choisi
 exports.drawThemeCards = async (req, res) => {
     try {
-        const theme = req.params.theme;
+        const themeName = req.params.theme;
+
+        const theme = themes.find(t => t.title_theme === themeName);
 
         // Vérifier si le thème choisi est valide
-        if (!(theme in themeData)) {
+        if (!theme) {
             return res.status(400).json({ message: "Thème invalide" });
         }
 
-        const themeCardsNames = themeData[theme].cards;
-        const themeInterpretation = themeData[theme].interpretation;
-        const tarotDeck = tarotData;
+        const tarotDeck = cardsData.filter(card => theme.meaning_theme.includes(card.name));
 
         // Sélection aléatoire de trois cartes associées au thème choisi
         const randomCards = [];
         while (randomCards.length < 3) {
-            const randomIndex = Math.floor(Math.random() * themeCardsNames.length);
-            const randomCardName = themeCardsNames[randomIndex];
-            const randomCard = tarotDeck.find(card => card.name === randomCardName);
-            // Vérifier si la carte tirée n'est pas déjà dans randomCards
+            const randomCard = drawRandomCard(tarotDeck);
             if (!randomCards.some(card => card.name === randomCard.name)) {
                 randomCards.push(randomCard);
             }
         }
 
         // Envoyer la réponse au client avec les cartes tirées et leur interprétation
-        res.json({ message: `Tirage de tarot pour le thème ${theme} effectué avec succès`, cards: randomCards, interpretation: themeInterpretation });
+        res.json({ message: `Tirage de tarot pour le thème ${themeName} effectué avec succès`, cards: randomCards, interpretation: theme.meaning_theme });
     } catch (error) {
         // En cas d'erreur, renvoyer un message d'erreur au client
         res.status(500).json({ message: 'Erreur lors du tirage de tarot pour le thème choisi', error });
     }
 };
+
+
+
+    
+
+   
