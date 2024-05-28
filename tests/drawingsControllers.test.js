@@ -1,5 +1,5 @@
 // test unitaire des fonctions de tirages
-// tarotControllers.test.js
+// drawingsControllers.test.js
 
 
 // Importe les fonctions à tester depuis tarotController.js

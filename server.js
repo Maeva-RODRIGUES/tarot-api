@@ -4,7 +4,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
+
 const drawingsRoutes = require('./routes/drawingsRoutes');
+
+const tarotRoutes = require('./routes/tarotRoutes');
+
 const cardsData = require('./db/cards');
 
 // console.log(cardsData[2])
@@ -22,6 +26,9 @@ const portfinder = require('portfinder');
 
 // Middleware pour traiter les requêtes JSON
 app.use(express.json());
+
+//Utilisation des routes pour gérer les données du fichier cards.js
+app.use('/api/tarot', tarotRoutes);
 
 // Utilisation des routes pour les tirages de tarot
 app.use('/api/tarot', drawingsRoutes);
