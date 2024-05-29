@@ -2,7 +2,7 @@
 // Utilité: Permet de gérer les avis des utilisateurs dans la base de données.
 
 const { DataTypes } = require('sequelize');
-// const sequelize = require('../config/sequelizeSetUp');
+const sequelize = require('../db/sequelizeSetUp');
 const User = require('./usersModels');
 
 const Review = sequelize.define('Review', {

@@ -2,7 +2,7 @@
 // Utilité: Permet de gérer les informations des utilisateurs dans la base de données.
 
 const { DataTypes } = require('sequelize');
-//const sequelize = require('../config/sequelizeSetUp');
+const sequelize = require('../db/sequelizeSetUp');
 const Role = require('./rolesModels');
 
 const User = sequelize.define('User', {

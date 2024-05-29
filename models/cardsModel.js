@@ -2,7 +2,7 @@
 // Utilité: Permet de gérer les informations des cartes de tarot dans la base de données.
 
 const { DataTypes } = require('sequelize');
-// const sequelize = require('../config/sequelizeSetUp');
+const sequelize = require('../db/sequelizeSetUp');
 
 const Card = sequelize.define('Card', {
   name_card: {
