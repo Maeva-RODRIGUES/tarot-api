@@ -9,6 +9,7 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
     host: dbConfig.host,
     dialect: dbConfig.dialect,
     port: dbConfig.port,
+    logging: false  // désactive la journalisation des requêtes SQL (SELECT 1+1 AS result)
 });
 
 sequelize.authenticate()
