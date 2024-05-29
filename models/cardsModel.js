@@ -4,7 +4,7 @@
 const { DataTypes } = require('sequelize');
 // const sequelize = require('../config/sequelizeSetUp');
 
-const Cards = sequelize.define('Card', {
+const Card = sequelize.define('Card', {
   name_card: {
     type: DataTypes.STRING,
     allowNull: false
@@ -27,7 +27,7 @@ const Cards = sequelize.define('Card', {
   }
 });
 
-module.exports = Cards;
+module.exports = Card;
 
 
 

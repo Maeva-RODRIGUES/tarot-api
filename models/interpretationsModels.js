@@ -1,0 +1,19 @@
+const { DataTypes } = require('sequelize');
+// const sequelize = require('../config/sequelizeSetUp');
+const Theme = require('./themesModels');
+
+const Interpretation = sequelize.define('Interpretation', {
+  meaning: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  id_Themes: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Theme,
+      key: 'id'
+    }
+  }
+});
+
+module.exports = Interpretation;
