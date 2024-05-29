@@ -1,7 +1,7 @@
 // Ce fichier définit le modèle User, qui représente les utilisateurs de l'application.
 // Utilité: Permet de gérer les informations des utilisateurs dans la base de données.
 
-onst { DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 //const sequelize = require('../config/sequelizeSetUp');
 //const Role = require('./rolesModels');
 
