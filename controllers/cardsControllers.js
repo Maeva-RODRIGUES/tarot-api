@@ -23,19 +23,15 @@ exports.getCardById = (req, res) => {
 // Fonction pour créer une nouvelle carte
 exports.createCard = async (req, res) => {
     try {
-        // Extraire les données de la requête
-        const { name, description } = req.body;
-
-        // Créer une nouvelle carte dans la base de données
         const newCard = await Card.create({
-            name,
-            description
+            name_card: req.body.name_card,
+            keyword1: req.body.keyword1,
+            keyword2: req.body.keyword2,
+            keyword3: req.body.keyword3,
+            image_url: req.body.image_url,
         });
-
-        // Renvoyer la nouvelle carte créée en réponse
         res.status(201).json(newCard);
     } catch (error) {
-        // En cas d'erreur, renvoyer un message d'erreur au client
         res.status(500).json({ message: 'Erreur lors de la création de la carte', error });
     }
 };

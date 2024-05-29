@@ -32,6 +32,10 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
 
 // Synchronisation de Sequelize avec la base de données
 
+ // Création des rôles
+
+ // Création des utilisateurs à partir des données fictives
+
 
 // Authentification à la base de données
 sequelize.authenticate()
@@ -42,4 +46,6 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', err);
     });
 
+
+// Exportation des modèles et de l'instance de Sequelize   
 module.exports = sequelize;
