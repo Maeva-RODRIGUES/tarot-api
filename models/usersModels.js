@@ -3,7 +3,7 @@
 
 const { DataTypes } = require('sequelize');
 //const sequelize = require('../config/sequelizeSetUp');
-//const Role = require('./rolesModels');
+const Role = require('./rolesModels');
 
 const User = sequelize.define('User', {
   name: {
