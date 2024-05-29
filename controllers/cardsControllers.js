@@ -1,6 +1,6 @@
-// tarotController.js :  logique métier de la gestion des cartes
+// cardsController.js :  logique métier de la gestion des cartes
 
-const cardsData = require('../db/cards');
+const { Card } = require('../models/indexModels');
 
 
 // Fonction pour récupérer toutes les cartes du tarot

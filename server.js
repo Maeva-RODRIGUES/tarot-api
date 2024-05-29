@@ -7,7 +7,7 @@ const app = express();
 
 const drawingsRoutes = require('./routes/drawingsRoutes');
 
-const tarotRoutes = require('./routes/tarotRoutes');
+const tarotRoutes = require('./routes/cardsRoutes');
 
 const cardsData = require('./db/cards');
 
