@@ -25,6 +25,10 @@ const Card = sequelize.define('Card', {
     type: DataTypes.STRING,
     allowNull: false
   }
+
+}, {
+  timestamps: true, // Ajoute les champs createdAt et updatedAt automatiquement 
+
 });
 
 module.exports = Card;
