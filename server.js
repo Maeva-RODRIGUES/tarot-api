@@ -3,6 +3,7 @@
 // Importer la bibliothèque express
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
 
 const drawingsRoutes = require('./routes/drawingsRoutes');
@@ -11,6 +12,9 @@ const portfinder = require('portfinder');
 
 // Middleware pour traiter les requêtes JSON
 app.use(express.json());
+
+// Configurer CORS pour permettre les requêtes depuis toutes les origines
+app.use(cors());
 
 // Utilisation des routes pour gérer les données du fichier cards.js
 app.use('/api/tarot', cardsRoutes);
