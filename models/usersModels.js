@@ -4,6 +4,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/sequelizeSetUp');
 const Role = require('./rolesModels');
+const bcrypt = require('bcrypt');
 
 const User = sequelize.define('User', {
   name: {
@@ -43,5 +44,20 @@ const User = sequelize.define('User', {
     }
   }
 });
+
+
+//Hook hashage de mot de passe avant d'être enregistré
+User.beforeCreate(async (user, options) => {
+  const salt = await bcrypt.genSalt(10); // Générer un salt avec 10 tours
+  user.password = await bcrypt.hash(user.password, salt); // Hacher le mot de passe
+});
+
+User.beforeUpdate(async (user, options) => {
+  if (user.changed('password')) {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+  }
+});
+
 
 module.exports = User;
