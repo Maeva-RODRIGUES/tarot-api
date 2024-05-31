@@ -1,5 +1,16 @@
 // Installer les dépendances suivantes avant de coder ce fichier : 
 // 1. jsonwebtoken : Pour la création et la vérification des tokens JWT.
 // 2. bcrypt : Pour le hachage des mots de passe.
-// auth.js contient les implémentations des fonctions nécessaires pour gérer les authentifications comme la vérification du token, la validation des identifiants...
+// auth.js contient les implémentations des fonctions nécessaires pour gérer les authentifications comme : Créer et vérifier les tokens JWT pour sécuriser les routes.
 
+const jwt = require('jsonwebtoken');
+
+// Générer un token JWT
+const generateToken = (user) => {
+  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
+// Middleware pour protéger les routes
+const protect = (req, res, next) => {
+  // Votre logique pour vérifier le token
+};

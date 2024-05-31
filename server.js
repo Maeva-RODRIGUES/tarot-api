@@ -4,6 +4,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+require('dotenv').config();
 const app = express();
 
 const drawingsRoutes = require('./routes/drawingsRoutes');

@@ -4,7 +4,7 @@
 module.exports = {
     database: 'tarot_db',
     username: 'tarot_db',
-    password: '-z5(rPxTUa3OtV54',
+    password: 'fyFLpx4eTCgsiD*d',
     host: 'localhost',
     dialect: 'mariadb',
     port: 3306
