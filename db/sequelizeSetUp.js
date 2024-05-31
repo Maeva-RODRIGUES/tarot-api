@@ -3,40 +3,35 @@
 // CONFIG DB
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
-const bcrypt = require('bcrypt');
-// const { Card, Theme, User, Review, Role, Interpretation } = require('../models/indexModels');
-const dbConfig = require('../config/connexionDatabase');
+const { Card, Theme, User, Review, Role, Interpretation } = require('../models/indexModels');
+
 
 
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données
 const sequelize = new Sequelize(
-    process.env.DB_NAME, // Nom de la base de données
-    process.env.DB_USER, // Utilisateur de la base de données
-    process.env.DB_PASS, // Mot de passe de la base de données
+    process.env.DB_NAME, 
+    process.env.DB_USER, 
+    process.env.DB_PASS, 
     {
-      host: process.env.DB_HOST, // Hôte de la base de données
-      dialect: 'mariadb', // Dialecte de la base de données
-      port: process.env.DB_PORT || 3306, // Port de la base de données avec une valeur par défaut si non spécifiée
+      host: process.env.DB_HOST, 
+      dialect: 'mariadb',
+      port: process.env.DB_PORT || 3306,
       logging: false // Désactive les logs SQL
     }
   );
 
 
-// Initialisation des modèles de données avec Sequelize
-// const Cards = Card (sequelize);
-// const Users = User (sequelize);
-// const Roles = Role (sequelize);
-// const Themes = Theme (sequelize);
-// const Interpretations = Interpretation (sequelize);
-// const Reviews = Review (sequelize);
-
-
 // Définition des relations entre les modèles
+// Exemple : Cards.hasMany(Interpretations);
 
 // Si l'environnement est "development", la base de données sera réinitialisée
 
 // Synchronisation de Sequelize avec la base de données
+sequelize.sync().then(() => {
+    console.log('Models synchronized with the database.');
+  });
+
 
  // Création des rôles
 

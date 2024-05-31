@@ -12,5 +12,21 @@ const generateToken = (user) => {
 
 // Middleware pour protéger les routes
 const protect = (req, res, next) => {
-  // Votre logique pour vérifier le token
+  let token;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // Ajoutez ici la logique pour attacher l'utilisateur à la requête
+      next();
+    } catch (error) {
+      res.status(401).json({ message: 'Non autorisé, token invalide' });
+    }
+  } else {
+    res.status(401).json({ message: 'Non autorisé, pas de token' });
+  }
 };
+
+module.exports = { generateToken, protect };
+
