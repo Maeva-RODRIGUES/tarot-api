@@ -2,6 +2,7 @@
 
 // CONFIG DB
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 // const { Card, Theme, User, Review, Role, Interpretation } = require('../models/indexModels');
 const dbConfig = require('../config/connexionDatabase');
@@ -9,12 +10,17 @@ const dbConfig = require('../config/connexionDatabase');
 
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
-    port: dbConfig.port,
-    logging: false  // désactive les logs SQL
-});
+const sequelize = new Sequelize(
+    process.env.DB_NAME, // Nom de la base de données
+    process.env.DB_USER, // Utilisateur de la base de données
+    process.env.DB_PASS, // Mot de passe de la base de données
+    {
+      host: process.env.DB_HOST, // Hôte de la base de données
+      dialect: 'mariadb', // Dialecte de la base de données
+      port: process.env.DB_PORT || 3306, // Port de la base de données avec une valeur par défaut si non spécifiée
+      logging: false // Désactive les logs SQL
+    }
+  );
 
 
 // Initialisation des modèles de données avec Sequelize

@@ -1,6 +1,5 @@
 //server.js
 
-// Importer la bibliothèque express
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
