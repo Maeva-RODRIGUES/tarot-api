@@ -1,5 +1,4 @@
 // Ce fichier utilise les informations de connexionDatabase.js pour configurer et initialiser Sequelize.
-
 // CONFIG DB
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
@@ -17,12 +16,6 @@ const sequelize = new Sequelize(
       logging: false // Désactive les logs SQL
     }
   );
-
-
-// Définition des relations entre les modèles
-// Exemple : Cards.hasMany(Interpretations);
-
-// Si l'environnement est "development", la base de données sera réinitialisée
 
 // Synchronisation de Sequelize avec la base de données
 sequelize.sync().then(() => {
