@@ -1,11 +1,15 @@
 // Centralise et organise les importations des models.
+//indexModels.js
 
-const Card = require('./cardsModel');
-const Theme = require('./themesModels');
-const Interpretation = require('./interpretationsModels');
-const User = require('./usersModels');
-const Review = require('./reviewsModels');
-const Role = require('./rolesModels');
+const sequelize = require('../db/sequelizeSetUp');
+const { DataTypes } = require('sequelize');
+
+const Card = require('./cardsModel')(sequelize, DataTypes);
+const Theme = require('./themesModels')(sequelize, DataTypes);
+const Interpretation = require('./interpretationsModels')(sequelize, DataTypes);
+const User = require('./usersModels')(sequelize, DataTypes);
+const Review = require('./reviewsModels')(sequelize, DataTypes);
+const Role = require('./rolesModels')(sequelize, DataTypes);
 
 module.exports = {
     Card,

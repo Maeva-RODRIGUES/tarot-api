@@ -3,9 +3,6 @@
 // CONFIG DB
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
-const { Card, Theme, User, Review, Role, Interpretation } = require('../models/indexModels');
-
-
 
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données

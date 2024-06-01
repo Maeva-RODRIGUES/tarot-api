@@ -30,6 +30,9 @@ app.get('/', (req, res) => {
 // Importer l'instance Sequelize configurée depuis sequelizesetup.js
 const sequelize = require('./db/sequelizeSetUp');
 
+// Importation des models
+const { Card, Theme } = require('./models/indexModels');
+
 // Utiliser l'instance Sequelize pour authentifier la connexion à la base de données
 sequelize.authenticate()
   .then(() => {
