@@ -3,16 +3,22 @@
 
 const express = require ('express');
 const router = express.Router();
-const tarotController = require('../controllers/drawingsControllers');
+const drawingsControllers = require('../controllers/drawingsControllers'); 
 
 // Route pour effectuer un tirage de tarot
-router.get('/draw', tarotController.drawCards);
+router.get('/draw', drawingsControllers.drawCards);
 
 // Route pour effectuer un tirage de tarot aléatoire
-router.get('/draw-random', tarotController.drawRandomCards);
+router.get('/draw-random', drawingsControllers.drawRandomCards);
 
 // Route pour gérer le tirage de cartes en fonction du thème choisi :
-router.get('/draw-theme/:theme', tarotController.drawThemeCards);
+router.get('/draw-theme/:theme', drawingsControllers.drawThemeCards);
+
+// Route pour mettre à jour un tirage spécifique par son ID
+router.put('/draw/:id', drawingsControllers.updateDrawingById);
+
+// Route pour supprimer un tirage spécifique par son ID
+router.delete('/draw/:id', drawingsControllers.deleteDrawingById);
 
 
 

@@ -6,50 +6,49 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 
+// Importation des routeurs
 const drawingsRoutes = require('./routes/drawingsRoutes');
 const cardsRoutes = require('./routes/cardsRoutes');
-const portfinder = require('portfinder');
 
-// Middleware pour traiter les requêtes JSON
+// Middleware pour traiter les requêtes JSON et logger les requêtes HTTP
 app.use(express.json());
+app.use(morgan('dev'));
 
 // Configurer CORS pour permettre les requêtes depuis toutes les origines
 app.use(cors());
 
-// Utilisation des routes pour gérer les données du fichier cards.js
+// Utilisation des routeurs
 app.use('/api/tarot', cardsRoutes);
-
-// Utilisation des routes pour les tirages de tarot
 app.use('/api/tarot', drawingsRoutes);
 
-// Route de base pour afficher un message de bienvenue lorsque quelqu'un accède à la racine de l'API.
+// Route de base pour afficher un message de bienvenue
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l\'API du tarot en ligne');
 });
 
-// Importer l'instance Sequelize configurée depuis sequelizesetup.js
+// Importer l'instance Sequelize configurée
 const sequelize = require('./db/sequelizeSetUp');
 
-// Importation des models
-const { Card, Theme } = require('./models/indexModels');
-
-// Utiliser l'instance Sequelize pour authentifier la connexion à la base de données
+// Synchronisation de la base de données et démarrage du serveur
 sequelize.authenticate()
   .then(() => {
-    // Utiliser portfinder pour obtenir un port disponible automatiquement
-    portfinder.getPortPromise()
-      .then((port) => {
-        // Démarrer le serveur sur le port obtenu
-        app.listen(port, () => {
-          console.log(`Serveur démarré sur le port ${port}`);
-        });
-      })
-      .catch((err) => {
-        console.error('Erreur lors de la recherche du port disponible :', err);
-      });
+    console.log('Connection has been established successfully.');
+    return sequelize.sync();
+  })
+  .then(() => {
+    const PORT = process.env.PORT || 8000;
+    app.listen(PORT, () => {
+      console.log(`Serveur démarré sur le port ${PORT}`);
+    });
   })
   .catch(err => {
-    console.error('Impossible de se connecter à la base de données:', err);
+    console.error('Unable to connect to the database:', err);
   });
+
+// Middleware d'erreur
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 module.exports = app;

@@ -87,8 +87,36 @@ exports.drawThemeCards = async (req, res) => {
     }
 };
 
+// Fonction pour mettre à jour un tirage spécifique par son ID
+exports.updateDrawingById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedDrawing = await Drawing.update(req.body, {
+            where: { id: id }
+        });
+        if (updatedDrawing) {
+            res.json({ message: 'Tirage mis à jour avec succès', updatedDrawing });
+        } else {
+            res.status(404).send('Tirage non trouvé ou pas de changement effectué');
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la mise à jour du tirage', error });
+    }
+};
 
-
-    
-
-   
+// Fonction pour supprimer un tirage spécifique par son ID
+exports.deleteDrawingById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deletedDrawing = await Drawing.destroy({
+            where: { id: id }
+        });
+        if (deletedDrawing) {
+            res.json({ message: 'Tirage supprimé avec succès' });
+        } else {
+            res.status(404).send('Tirage non trouvé');
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la suppression du tirage', error });
+    }
+};

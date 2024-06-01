@@ -66,7 +66,7 @@ test('GET /api/tarot/draw-theme/:theme', async () => {
   const theme = 'love'; // Peut être 'love', 'work' ou 'spiritual' selon ce qui est défini dans le contrôleur
 
   // Effectuer une requête GET vers la route de tirage de tarot en fonction du thème choisi
-  const response = await request(app).get(`/api/tarot/draw-theme/${theme}`);
+  const response = await request(app).get (`/api/tarot/draw-theme/${theme}`);
 
   // Vérifier que le statut de la réponse est 200 OK
   expect(response.status).toBe(200);
