@@ -1,6 +1,8 @@
 // drawingsController.js : logique métier des tirages de cartes
 
 const { Card, Theme, Drawing } = require('../models/indexModels');
+const cardsData = require('../db/cards');
+const themes = require('../db/themes');
 
 
 // Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot
@@ -27,7 +29,7 @@ exports.drawCards = async (req, res) => {
     }
 };
 
-// Fonction pour effectuer un tirage de tarot aléatoire basé sur le thème "love"
+// Fonction pour effectuer un tirage de tarot aléatoire basé sur le thème "Amour"
 exports.drawRandomCards = async (req, res) => {
     try {
         const themeName = "Amour"; // Le thème "Amour"
@@ -120,3 +122,23 @@ exports.deleteDrawingById = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la suppression du tirage', error });
     }
 };
+
+// Fonction pour créer un nouveau tirage de tarot
+exports.createDrawing = async (req, res) => {
+    try {
+      // Utilisez les données reçues dans la requête pour créer un tirage
+      const newDrawing = await Drawing.create({
+        date: req.body.date,
+        cards: req.body.cards,
+        id_Themes: req.body.id_Themes,
+        id_Users: req.body.id_Users
+      });
+      // Renvoyez l'ID du nouveau tirage dans la réponse
+      res.status(201).json({ id: newDrawing.id, ...newDrawing.get({ plain: true }) });
+    } catch (error) {
+      // Gérez les erreurs potentielles
+      res.status(500).json({ message: 'Erreur lors de la création du tirage', error });
+    }
+  };
+
+  

@@ -3,6 +3,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const portfinder = require('portfinder');
 require('dotenv').config();
 const app = express();
 
@@ -36,10 +37,16 @@ sequelize.authenticate()
     return sequelize.sync();
   })
   .then(() => {
-    const PORT = process.env.PORT || 8000;
-    app.listen(PORT, () => {
-      console.log(`Serveur démarré sur le port ${PORT}`);
-    });
+    // Utiliser portfinder pour trouver un port libre
+    portfinder.getPortPromise()
+      .then((port) => {
+        app.listen(port, () => {
+          console.log(`Serveur démarré sur le port ${port}`);
+        });
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la recherche d\'un port libre :', error);
+      });
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);

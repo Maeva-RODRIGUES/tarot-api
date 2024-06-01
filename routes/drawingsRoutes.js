@@ -14,11 +14,15 @@ router.get('/draw-random', drawingsControllers.drawRandomCards);
 // Route pour gérer le tirage de cartes en fonction du thème choisi :
 router.get('/draw-theme/:theme', drawingsControllers.drawThemeCards);
 
+router.post('/draw', drawingsControllers.createDrawing);
+
 // Route pour mettre à jour un tirage spécifique par son ID
 router.put('/draw/:id', drawingsControllers.updateDrawingById);
 
 // Route pour supprimer un tirage spécifique par son ID
 router.delete('/draw/:id', drawingsControllers.deleteDrawingById);
+
+
 
 
 
