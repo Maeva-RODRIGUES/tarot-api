@@ -14,6 +14,10 @@ router.get('/cards/:id', cardsControllers.getCardById);
 // Route pour créer une nouvelle carte
 router.post('/cards', cardsControllers.createCard);
 
+// Route pour mettre à jour une carte spécifique par son ID
+router.put('/cards/:id', cardsControllers.updateCardById);
 
+// Route pour supprimer une carte spécifique par son ID
+router.delete('/cards/:id', cardsControllers.deleteCardById);
 
 module.exports = router;

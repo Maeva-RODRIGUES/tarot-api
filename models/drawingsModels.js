@@ -2,7 +2,7 @@
 // drawingsModels.js
 
 module.exports = (sequelize, DataTypes) => {
-    const Drawing = sequelize.define('Drawing', {
+    const Drawing = sequelize.define('Drawings', {
       date: {
         type: DataTypes.DATE,
         allowNull: false
@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       id_Themes: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Theme', // Assurez-vous que cela correspond au nom de la table telle qu'elle est définie dans Sequelize
+          model: 'Themes', // Assurez-vous que cela correspond au nom de la table telle qu'elle est définie dans Sequelize
           key: 'id'
         }
       },
       id_Users: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'User', // Assurez-vous que cela correspond au nom de la table telle qu'elle est définie dans Sequelize
+          model: 'Users', // Assurez-vous que cela correspond au nom de la table telle qu'elle est définie dans Sequelize
           key: 'id'
         }
       }

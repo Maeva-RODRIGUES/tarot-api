@@ -1,6 +1,6 @@
 // drawingsController.js : logique métier des tirages de cartes
 
-const { Card, Theme } = require('../models/indexModels');
+const { Card, Theme, Drawing } = require('../models/indexModels');
 
 
 // Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot

@@ -10,7 +10,7 @@ const Interpretation = require('./interpretationsModels')(sequelize, DataTypes);
 const User = require('./usersModels')(sequelize, DataTypes);
 const Review = require('./reviewsModels')(sequelize, DataTypes);
 const Role = require('./rolesModels')(sequelize, DataTypes);
-const Drawing = require('./drawingModel')(sequelize, DataTypes);
+const Drawing = require('./drawingsModels')(sequelize, DataTypes);
 
 module.exports = {
     Card,
