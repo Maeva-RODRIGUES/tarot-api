@@ -10,6 +10,8 @@ const app = express();
 // Importation des routeurs
 const drawingsRoutes = require('./routes/drawingsRoutes');
 const cardsRoutes = require('./routes/cardsRoutes');
+const usersRoutes = require('./routes/usersRoutes');
+const rolesRoutes = require('./routes/rolesRoutes');
 
 // Middleware pour traiter les requêtes JSON et logger les requêtes HTTP
 app.use(express.json());
@@ -21,6 +23,8 @@ app.use(cors());
 // Utilisation des routeurs
 app.use('/api/tarot', cardsRoutes);
 app.use('/api/tarot', drawingsRoutes);
+app.use('/api/tarot', usersRoutes);
+app.use('/api/tarot', rolesRoutes);
 
 // Route de base pour afficher un message de bienvenue
 app.get('/', (req, res) => {
