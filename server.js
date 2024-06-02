@@ -13,6 +13,8 @@ const cardsRoutes = require('./routes/cardsRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const rolesRoutes = require('./routes/rolesRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
+const themesRoutes = require('./routes/themesRoutes');
+//const interpretationsRoutes = require('./routes/interpretationsRoutes');
 
 // Middleware pour traiter les requêtes JSON et logger les requêtes HTTP
 app.use(express.json());
@@ -27,6 +29,8 @@ app.use('/api/tarot', drawingsRoutes);
 app.use('/api/tarot', usersRoutes);
 app.use('/api/tarot', rolesRoutes);
 app.use('/api/tarot', reviewsRoutes);
+app.use('/api', themesRoutes);
+// app.use('/api', interpretationsRoutes);
 
 // Route de base pour afficher un message de bienvenue
 app.get('/', (req, res) => {
