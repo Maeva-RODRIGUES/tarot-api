@@ -1,5 +1,6 @@
 // Ce fichier définit le modèle Review, qui représente les avis laissés par les utilisateurs.
 // Utilité: Permet de gérer les avis des utilisateurs dans la base de données.
+// reviewsModels.js
 
 module.exports = (sequelize, DataTypes) => {
   const Review = sequelize.define('Review', {
