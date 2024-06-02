@@ -1,5 +1,6 @@
 // Ce fichier définit le modèle User, qui représente les utilisateurs de l'application.
 // Utilité: Permet de gérer les informations des utilisateurs dans la base de données.
+// usersModels.js
 
 const bcrypt = require('bcrypt');
 
