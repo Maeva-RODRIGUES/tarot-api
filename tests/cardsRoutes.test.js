@@ -1,5 +1,5 @@
 //Fichier de tests pour les routes qui gèrent les données des cartes de tarot, Ces tests vérifient si les routes renvoient les bonnes données et si les erreurs sont correctement gérées. 
-// tarotRoutes.test.js
+// cardsRoutes.test.js
 
 const request = require('supertest');
 const app = require('../server');

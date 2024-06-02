@@ -1,5 +1,5 @@
-// Fichier de test pour les routes de l'API avec un échantillon de données fictives.
-// drawingsRoutes.test.js
+// Fichier de test d'intégration pour les routes de l'API avec un échantillon de données fictives.
+// drawingsApiIntegration.test.js
 
 const request = require('supertest');
 const app = require('../server');

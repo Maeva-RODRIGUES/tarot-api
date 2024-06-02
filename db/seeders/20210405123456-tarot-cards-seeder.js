@@ -1,6 +1,8 @@
+// 20210405123456-tarot-cards-seeder.js
+
 'use strict';
 
-const cardsData = require('../cards'); // Assurez-vous que le chemin est correct
+const cardsData = require('../cardsMock'); 
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,7 +11,7 @@ module.exports = {
       keyword1: card.keyword1,
       keyword2: card.keyword2,
       keyword3: card.keyword3,
-      image_url: card.image_url, // Assurez-vous que cette propriété est définie dans vos données
+      image_url: card.image_url, 
       createdAt: new Date(),
       updatedAt: new Date()
     })), {});

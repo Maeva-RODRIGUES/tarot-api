@@ -1,3 +1,6 @@
+//20240529182737-create-cards.js
+
+
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */

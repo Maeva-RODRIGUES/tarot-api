@@ -1,4 +1,4 @@
-// Données initiales des 22 arcanes majeures du tarot Rider-Wait
+// Mock de données initiales des 22 arcanes majeures du tarot Rider-Wait
 
 const cards = [
     {

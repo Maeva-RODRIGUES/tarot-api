@@ -1,7 +1,7 @@
 // cardsController.js :  logique métier de la gestion des cartes
 
 const { Card } = require('../models/indexModels');
-const cardsData = require('../db/cards');
+const cardsData = require('../db/cardsMock');
 
 
 // Fonction pour récupérer toutes les cartes du tarot
