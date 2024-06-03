@@ -26,26 +26,26 @@ const Role = require('./rolesModels')(sequelize, DataTypes);
 const Drawing = require('./drawingsModels')(sequelize, DataTypes);
 
 // Définir les relations
-Role.hasMany(User, { foreignKey: 'id_Roles' });
+Role.hasMany(User, { foreignKey: 'id_Roles', onDelete: 'CASCADE' });
 User.belongsTo(Role, { foreignKey: 'id_Roles' });
 
-Theme.hasMany(Interpretation, { foreignKey: 'id_Themes' });
+Theme.hasMany(Interpretation, { foreignKey: 'id_Themes', onDelete: 'CASCADE' });
 Interpretation.belongsTo(Theme, { foreignKey: 'id_Themes' });
 
-Theme.hasMany(Drawing, { foreignKey: 'id_Themes' });
+Theme.hasMany(Drawing, { foreignKey: 'id_Themes', onDelete: 'CASCADE' });
 Drawing.belongsTo(Theme, { foreignKey: 'id_Themes' });
 
-User.hasMany(Drawing, { foreignKey: 'id_Users' });
+User.hasMany(Drawing, { foreignKey: 'id_Users', onDelete: 'CASCADE' });
 Drawing.belongsTo(User, { foreignKey: 'id_Users' });
 
-User.hasMany(Review, { foreignKey: 'id_Users' });
+User.hasMany(Review, { foreignKey: 'id_Users', onDelete: 'CASCADE' });
 Review.belongsTo(User, { foreignKey: 'id_Users' });
 
-Drawing.belongsToMany(Card, { through: 'compose', foreignKey: 'id_drawings' });
-Card.belongsToMany(Drawing, { through: 'compose', foreignKey: 'id_cards' });
+Drawing.belongsToMany(Card, { through: 'compose', foreignKey: 'id_drawings', onDelete: 'CASCADE' });
+Card.belongsToMany(Drawing, { through: 'compose', foreignKey: 'id_cards', onDelete: 'CASCADE' });
 
 // Synchronisation de Sequelize avec la base de données
-sequelize.sync({ force: true }) 
+sequelize.sync() 
   .then(() => {
     console.log('Models synchronized with the database.');
 
