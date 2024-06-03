@@ -6,6 +6,7 @@ const cors = require('cors');
 const portfinder = require('portfinder');
 require('dotenv').config();
 const app = express();
+const { sequelize } = require('./models/indexModels'); // Importer sequelize depuis indexModels
 
 // Importation des routeurs
 const drawingsRoutes = require('./routes/drawingsRoutes');
@@ -36,9 +37,6 @@ app.use('/api/tarot', interpretationsRoutes);
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l\'API du tarot en ligne');
 });
-
-// Importer l'instance Sequelize configurée
-const sequelize = require('./db/sequelizeSetUp');
 
 // Synchronisation de la base de données et démarrage du serveur
 sequelize.authenticate()
