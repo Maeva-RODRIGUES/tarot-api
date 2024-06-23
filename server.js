@@ -3,6 +3,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); // Importer le middleware cookie-parser
 const portfinder = require('portfinder');
 require('dotenv').config();
 const app = express();
@@ -16,6 +17,10 @@ app.use(morgan('dev'));
 
 // Configurer CORS pour permettre les requêtes depuis toutes les origines
 app.use(cors());
+
+// Utiliser le middleware cookie-parser pour gérer les cookies
+app.use(cookieParser());
+
 
 // Utilisation du routeur centralisé
 app.use('/api/tarot', indexRoutes);
