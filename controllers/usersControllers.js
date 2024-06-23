@@ -1,67 +1,76 @@
 // usersControllers.js
 
-const User = require('../models/usersModels'); 
+const { User } = require('../models/indexModels');
 
-// Récupérer tous les utilisateurs
-exports.getAllUsers = async (req, res) => {
-    try {
-        const users = await User.findAll();
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-// Récupérer un utilisateur par son ID
-exports.getUserById = async (req, res) => {
-    try {
-        const user = await User.findByPk(req.params.id);
-        if (user) {
-            res.json(user);
-        } else {
-            res.status(404).json({ error: 'User not found' });
+const usersControllers = {
+    // Récupérer tous les utilisateurs
+    getAllUsers: async (req, res) => {
+        try {
+            const users = await User.findAll();
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
         }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
+    },
 
-// Créer un nouvel utilisateur
-exports.createUser = async (req, res) => {
-    try {
-        const newUser = await User.create(req.body);
-        res.status(201).json(newUser);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-// Mettre à jour un utilisateur par son ID
-exports.updateUser = async (req, res) => {
-    try {
-        const user = await User.findByPk(req.params.id);
-        if (user) {
-            await user.update(req.body);
-            res.json(user);
-        } else {
-            res.status(404).json({ error: 'User not found' });
+    // Récupérer un utilisateur par son ID
+    getUserById: async (req, res) => {
+        const id = req.params.id;
+        try {
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur non trouvé' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json({ message: 'Erreur lors de la récupération de l\'utilisateur', error });
         }
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    },
+
+    // Créer un nouvel utilisateur
+    createUser: async (req, res) => {
+        try {
+            const newUser = await User.create(req.body);
+            res.status(201).json(newUser);
+        } catch (error) {
+            res.status(400).json({ message: 'Erreur lors de la création de l\'utilisateur', error });
+        }
+    },
+
+    // Mettre à jour un utilisateur par son ID
+    updateUser: async (req, res) => {
+        const id = req.params.id;
+        try {
+            const [updatedCount, updatedUsers] = await User.update(req.body, {
+                where: { id: id },
+                returning: true, // pour retourner les données mises à jour
+            });
+            if (updatedCount > 0) {
+                res.json({ message: 'Utilisateur mis à jour avec succès', updatedUsers });
+            } else {
+                res.status(404).send('Utilisateur non trouvé ou pas de changement effectué');
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'utilisateur', error });
+        }
+    },
+
+    // Supprimer un utilisateur par son ID
+    deleteUser: async (req, res) => {
+        const id = req.params.id;
+        try {
+            const deletedCount = await User.destroy({
+                where: { id: id }
+            });
+            if (deletedCount > 0) {
+                res.json({ message: 'Utilisateur supprimé avec succès' });
+            } else {
+                res.status(404).send('Utilisateur non trouvé');
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'Erreur lors de la suppression de l\'utilisateur', error });
+        }
     }
 };
 
-// Supprimer un utilisateur par son ID
-exports.deleteUser = async (req, res) => {
-    try {
-        const user = await User.findByPk(req.params.id);
-        if (user) {
-            await user.destroy();
-            res.status(204).json();
-        } else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
+module.exports = usersControllers;

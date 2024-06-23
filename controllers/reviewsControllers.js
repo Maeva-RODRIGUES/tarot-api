@@ -1,56 +1,74 @@
 // reviewsControllers.js
 
-const Reviews = require('../models/reviewsModels'); 
+const { Review } = require('../models/indexModels');
 
 const reviewsControllers = {
     // Récupérer tous les avis
     getAllReviews: async (req, res) => {
         try {
-            const reviews = await Reviews.find();
+            const reviews = await Review.findAll();
             res.status(200).json(reviews);
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({ message: 'Erreur lors de la récupération des avis', error });
         }
     },
 
     // Récupérer un avis spécifique par son ID
     getReviewById: async (req, res) => {
+        const id = req.params.id;
         try {
-            const review = await Reviews.findById(req.params.id);
+            const review = await Review.findByPk(id);
+            if (!review) {
+                return res.status(404).json({ message: 'Avis non trouvé' });
+            }
             res.status(200).json(review);
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({ message: 'Erreur lors de la récupération de l\'avis', error });
         }
     },
 
     // Créer un nouvel avis
     createReview: async (req, res) => {
         try {
-            const newReview = new Reviews(req.body);
-            const savedReview = await newReview.save();
-            res.status(201).json(savedReview);
+            const newReview = await Review.create(req.body);
+            res.status(201).json(newReview);
         } catch (error) {
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ message: 'Erreur lors de la création de l\'avis', error });
         }
     },
 
     // Mettre à jour un avis par son ID
     updateReview: async (req, res) => {
+        const id = req.params.id;
         try {
-            const updatedReview = await Reviews.findByIdAndUpdate(req.params.id, req.body, { new: true });
-            res.status(200).json(updatedReview);
+            const [updatedCount, updatedReviews] = await Review.update(req.body, {
+                where: { id: id },
+                returning: true, // pour retourner les données mises à jour
+            });
+            if (updatedCount > 0) {
+                res.json({ message: 'Avis mis à jour avec succès', updatedReviews });
+            } else {
+                res.status(404).send('Avis non trouvé ou pas de changement effectué');
+            }
         } catch (error) {
-            res.status(400).json({ message: error.message });
+            res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'avis', error });
         }
     },
 
     // Supprimer un avis par son ID
     deleteReview: async (req, res) => {
+        const id = req.params.id;
         try {
-            await Reviews.findByIdAndDelete(req.params.id);
-            res.status(200).json({ message: 'Avis supprimé avec succès' });
+            const deletedCount = await Review.destroy({
+                where: { id: id }
+            });
+            if (deletedCount > 0) {
+                res.json({ message: 'Avis supprimé avec succès' });
+            } else {
+                res.status(404).send('Avis non trouvé');
+            }
         } catch (error) {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({ message: 'Erreur lors de la suppression de l\'avis', error });
         }
     }
 };

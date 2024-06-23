@@ -1,7 +1,6 @@
 // drawingsController.js : logique métier des tirages de cartes
 
 const { Card, Theme, Drawing } = require('../models/indexModels');
-const cardsData = require('../db/cardsMock');
 const themes = require('../db/themesMock');
 
 
@@ -94,14 +93,17 @@ exports.updateDrawingById = async (req, res) => {
     try {
         const id = req.params.id;
         const updatedDrawing = await Drawing.update(req.body, {
-            where: { id: id }
+            where: { id: id },
+            returning: true, // Renvoyer le tirage mis à jour
         });
-        if (updatedDrawing) {
-            res.json({ message: 'Tirage mis à jour avec succès', updatedDrawing });
+
+        if (updatedDrawing[0] === 1) {
+            res.json({ message: 'Tirage mis à jour avec succès', updatedDrawing: updatedDrawing[1][0] });
         } else {
             res.status(404).send('Tirage non trouvé ou pas de changement effectué');
         }
     } catch (error) {
+        console.error('Erreur lors de la mise à jour du tirage :', error);
         res.status(500).json({ message: 'Erreur lors de la mise à jour du tirage', error });
     }
 };

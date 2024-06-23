@@ -1,22 +1,29 @@
 // cardsController.js :  logique métier de la gestion des cartes
 
 const { Card } = require('../models/indexModels');
-const cardsData = require('../db/cardsMock');
-
 
 // Fonction pour récupérer toutes les cartes du tarot
-exports.getAllCards = (req, res) => {
-    res.json(cardsData);
+exports.getAllCards = async (req, res) => {
+    try {
+        const cards = await Card.findAll();
+        res.json(cards);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération des cartes', error });
+    }
 };
 
 // Fonction pour récupérer une carte spécifique par son ID
-exports.getCardById = (req, res) => {
-    const id = parseInt(req.params.id);
-    const card = cardsData.find(card => card.id === id);
-    if (card) {
-        res.json(card);
-    } else {
-        res.status(404).send('Carte non trouvée');
+exports.getCardById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const card = await Card.findByPk(id);
+        if (card) {
+            res.json(card);
+        } else {
+            res.status(404).send('Carte non trouvée');
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération de la carte', error });
     }
 };
 
@@ -43,8 +50,10 @@ exports.updateCardById = async (req, res) => {
         const updatedCard = await Card.update(req.body, {
             where: { id: id }
         });
-        if (updatedCard) {
-            res.json({ message: 'Carte mise à jour avec succès', updatedCard });
+
+        if (updatedCard[0] === 1) {
+            const updatedCardData = await Card.findByPk(id);
+            res.json({ message: 'Carte mise à jour avec succès', updatedCard: updatedCardData });
         } else {
             res.status(404).send('Carte non trouvée ou pas de changement effectué');
         }

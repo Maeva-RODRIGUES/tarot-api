@@ -4,12 +4,13 @@ const themes = require('../themesMock');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Themes', themes.map(theme => ({
+    // Map through themesData to create an array of objects for bulkInsert
+    const themesToInsert = themes.map(theme => ({
       title_theme: theme.title_theme,
-      meaning_theme: theme.meaning_theme.join(', '), // Convert the array to a string
-      createdAt: new Date(),
-      updatedAt: new Date()
-    })), {});
+      meaning_theme: JSON.stringify(theme.meaning_theme), // Convert the array to a string
+    }));
+
+    await queryInterface.bulkInsert('Themes', themesToInsert, {});
   },
 
   down: async (queryInterface, Sequelize) => {

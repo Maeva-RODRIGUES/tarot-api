@@ -6,18 +6,18 @@ const router = express.Router();
 const cardsControllers = require('../controllers/cardsControllers');
 
 // Route pour récupérer toutes les cartes du tarot
-router.get('/cards', cardsControllers.getAllCards);
+router.get('/', cardsControllers.getAllCards);
 
 // Route pour récupérer une carte spécifique par son ID
-router.get('/cards/:id', cardsControllers.getCardById);
+router.get('/:id', cardsControllers.getCardById);
 
 // Route pour créer une nouvelle carte
-router.post('/cards', cardsControllers.createCard);
+router.post('/', cardsControllers.createCard);
 
 // Route pour mettre à jour une carte spécifique par son ID
-router.put('/cards/:id', cardsControllers.updateCardById);
+router.put('/:id', cardsControllers.updateCardById);
 
 // Route pour supprimer une carte spécifique par son ID
-router.delete('/cards/:id', cardsControllers.deleteCardById);
+router.delete('/:id', cardsControllers.deleteCardById);
 
 module.exports = router;
