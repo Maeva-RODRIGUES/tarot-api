@@ -1,7 +1,7 @@
-// reviews.test.js
+// reviewsRoutes.test.js
 
 const request = require('supertest');
-const app = require('../server');
+const app = require('../../server');
 
 describe('Tests pour les routes des avis', () => {
     let reviewId;

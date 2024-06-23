@@ -2,9 +2,9 @@
 // drawingsApiIntegration.test.js
 
 const request = require('supertest');
-const app = require('../server');
+const app = require('../../server');
 const { Sequelize } = require('sequelize');
-const dbConfig = require('../config/connexionDatabase');
+const dbConfig = require('../../config/connexionDatabase');
 
 
 describe('Test des routes de DrawingsRoutes.js', () => {

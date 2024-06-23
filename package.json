@@ -33,6 +33,7 @@
     "mariadb": "^3.3.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.9.7",
+    "nock": "^13.5.4",
     "nodemon": "^3.1.0",
     "portfinder": "^1.0.32",
     "sequelize": "^6.37.3",
@@ -43,8 +44,17 @@
     "supertest": "^7.0.0"
   },
   "jest": {
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ]
-  }
+  "testEnvironment": "node",
+  "testMatch": [
+    "**/__tests__/**/*.js",
+    "**/?(*.)+(spec|test).js"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "roots": [
+    "<rootDir>/unit",
+    "<rootDir>/integration"
+  ]
+}
 }

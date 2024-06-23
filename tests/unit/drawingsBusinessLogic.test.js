@@ -3,7 +3,7 @@
 
 
 // Importe les fonctions à tester depuis tarotController.js
-const { drawCards, drawRandomCards, drawThemeCards } = require('../controllers/drawingsControllers');
+const { drawCards, drawRandomCards, drawThemeCards } = require('../../controllers/drawingsControllers');
 
 // Tests pour drawCards
 test('drawCards renvoie un tirage de tarot avec trois cartes', () => {
