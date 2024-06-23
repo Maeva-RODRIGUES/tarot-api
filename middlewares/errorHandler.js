@@ -1,10 +1,11 @@
 // errorHandler.js
 
 const { UniqueConstraintError, ValidationError } = require("sequelize");
+const logger = require('./logger'); // Importer la configuration Winston
 
 // Middleware pour gérer les erreurs
 const errorHandler = (err, req, res, next) => {
-  console.error(err.stack); // Log de l'erreur dans la console
+  logger.error(`${err.statusCode || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Une erreur est survenue sur le serveur';
