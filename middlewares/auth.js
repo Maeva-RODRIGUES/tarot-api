@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 
 const { User } = require('../models/indexModels');
 
-// Générer un token JWT
+// Générer un token JWT avec expiration d'une heure
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
