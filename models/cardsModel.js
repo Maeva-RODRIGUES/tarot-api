@@ -4,6 +4,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Card = sequelize.define('Card', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     name_card: {
       type: DataTypes.STRING,
       allowNull: false
@@ -25,8 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
-    timestamps: true
+    timestamps: false
   });
 
   return Card;
 };
+

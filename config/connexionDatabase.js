@@ -2,7 +2,7 @@
 // connexionDatabase.js
 
 module.exports = {
-    database: 'tarot_db',
+    database: 'api_tarot_db',
     username: 'tarot_db',
     password: 'fyFLpx4eTCgsiD*d',
     host: 'localhost',

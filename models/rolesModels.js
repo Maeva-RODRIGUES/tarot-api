@@ -6,24 +6,20 @@ const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     role_name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
     }
+  }, {
+    timestamps: false
   });
 
   return Role;
 };
-
 
 

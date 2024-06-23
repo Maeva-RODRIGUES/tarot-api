@@ -4,6 +4,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Theme = sequelize.define('Theme', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     title_theme: {
       type: DataTypes.STRING,
       allowNull: false
@@ -12,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     }
+  }, {
+    timestamps: false
   });
 
   return Theme;

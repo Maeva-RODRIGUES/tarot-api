@@ -4,6 +4,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Interpretation = sequelize.define('Interpretation', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     meaning: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -11,12 +16,15 @@ module.exports = (sequelize, DataTypes) => {
     id_Themes: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Themes', 
+        model: 'Themes',
         key: 'id'
       }
     }
+  }, {
+    timestamps: false
   });
 
   return Interpretation;
 };
+
 

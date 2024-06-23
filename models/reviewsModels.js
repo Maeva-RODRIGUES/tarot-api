@@ -4,6 +4,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Review = sequelize.define('Review', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     rating: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -23,8 +28,11 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     }
+  }, {
+    timestamps: true
   });
 
   return Review;
 };
+
 
