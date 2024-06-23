@@ -44,17 +44,8 @@
     "supertest": "^7.0.0"
   },
   "jest": {
-  "testEnvironment": "node",
-  "testMatch": [
-    "**/__tests__/**/*.js",
-    "**/?(*.)+(spec|test).js"
-  ],
-  "testPathIgnorePatterns": [
-    "/node_modules/"
-  ],
-  "roots": [
-    "<rootDir>/unit",
-    "<rootDir>/integration"
-  ]
-}
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  }
 }
