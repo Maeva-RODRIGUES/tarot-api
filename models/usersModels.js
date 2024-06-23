@@ -3,7 +3,6 @@
 // usersModels.js
 
 const bcrypt = require('bcrypt');
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
@@ -22,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        isEmail: true
+      }
     },
     birthday: {
       type: DataTypes.DATE,
@@ -38,7 +40,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: {
+          args: [8, 100], // Longueur minimale et maximale
+          msg: 'Le mot de passe doit contenir au moins 8 caractères'
+        }
+      }
     },
     id_Roles: {
       type: DataTypes.INTEGER,
@@ -64,4 +72,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return User;
 };
-

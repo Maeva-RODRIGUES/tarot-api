@@ -4,10 +4,11 @@
 // auth.js contient les implémentations des fonctions nécessaires pour gérer les authentifications comme : Créer et vérifier les tokens JWT pour sécuriser les routes.
 
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // Générer un token JWT
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 // Middleware pour protéger les routes
@@ -18,7 +19,7 @@ const protect = (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      // Ajoutez ici la logique pour attacher l'utilisateur à la requête
+      req.user = decoded; // Attacher l'utilisateur décodé à la requête
       next();
     } catch (error) {
       res.status(401).json({ message: 'Non autorisé, token invalide' });
@@ -29,4 +30,3 @@ const protect = (req, res, next) => {
 };
 
 module.exports = { generateToken, protect };
-

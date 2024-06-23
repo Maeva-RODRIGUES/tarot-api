@@ -5,25 +5,27 @@ const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const portfinder = require('portfinder');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+require('dotenv').config();
+const app = express();
 const { sequelize } = require('./models/indexModels');
 const indexRoutes = require('./routes/indexRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
-require('dotenv').config();
-
-const app = express();
-
-// Middleware pour logger les requêtes HTTP
-app.use(morgan('dev'));
-
-// Middleware pour gérer les requêtes JSON
+// Middleware pour sécuriser l'application
+app.use(helmet());
 app.use(express.json());
-
-// Middleware pour gérer les cookies
+app.use(morgan('dev'));
+app.use(cors());
 app.use(cookieParser());
 
-// Middleware pour autoriser les requêtes depuis toutes les origines (CORS)
-app.use(cors());
+// Limitation du taux de requêtes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limite chaque IP à 100 requêtes par windowMs
+});
+app.use(limiter);
 
 // Utilisation du routeur centralisé
 app.use('/api/tarot', indexRoutes);
@@ -58,5 +60,5 @@ sequelize.authenticate()
         console.error('Impossible de se connecter à la base de données :', err);
     });
 
-// Export de l'application pour les tests ou autres utilisations
+
 module.exports = app;
