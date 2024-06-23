@@ -70,5 +70,15 @@ module.exports = (sequelize, DataTypes) => {
   User.beforeCreate(hashPassword); // Hacher le mot de passe avant la création
   User.beforeUpdate(hashPassword); // Hacher le mot de passe avant la mise à jour
 
+
+// Associer le modèle Role avec User
+User.associate = models => {
+  User.belongsTo(models.Role, {
+    foreignKey: 'id_Roles',
+    as: 'role'
+  });
+};
+
+
   return User;
 };

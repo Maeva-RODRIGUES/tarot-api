@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
-const { protect } = require('../middlewares/auth'); // Importer le middleware protect
+const { protect, authorize } = require('../middlewares/auth'); // Importer les middlewares protect et authorize
 const errorHandler = require('../middlewares/errorHandler'); // Importer le middleware errorHandler
 
 
@@ -22,13 +22,13 @@ const rolesRoutes = require ('./rolesRoutes');
 
 
 // Monter les routes spécifiques sur le routeur principal
-router.use('/cards', cardsRoutes);
-router.use('/themes', themesRoutes);
-router.use('/drawings', drawingsRoutes);
-router.use('/interpretations', interpretationsRoutes);
-router.use('/reviews', reviewsRoutes);
-router.use('/users', usersRoutes);
-router.use('/roles', rolesRoutes);
+router.use('/cards', protect, cardsRoutes);
+router.use('/themes', protect, themesRoutes);
+router.use('/drawings', protect, drawingsRoutes);
+router.use('/interpretations', protect, interpretationsRoutes);
+router.use('/reviews', protect, reviewsRoutes);
+router.use('/users', protect, authorize(['admin']), usersRoutes);
+router.use('/roles', protect, authorize(['admin']), rolesRoutes);
 
 // Route pour gérer le consentement aux cookies
 router.post('/consent', (req, res) => {

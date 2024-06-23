@@ -6,6 +6,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+const { User } = require('../models/indexModels');
+
 // Générer un token JWT
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -29,4 +31,18 @@ const protect = (req, res, next) => {
   }
 };
 
-module.exports = { generateToken, protect };
+const authorize = (roles) => {
+  return async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.user.id, { include: 'role' });
+      if (!roles.includes(user.role.role_name)) {
+        return res.status(403).json({ message: 'Accès interdit' });
+      }
+      next();
+    } catch (error) {
+      res.status(500).json({ message: 'Erreur d\'autorisation' });
+    }
+  };
+};
+
+module.exports = { generateToken, protect, authorize };
