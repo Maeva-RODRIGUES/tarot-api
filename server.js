@@ -8,6 +8,7 @@ require('dotenv').config();
 const app = express();
 const { sequelize } = require('./models/indexModels'); // Importer sequelize depuis indexModels
 const indexRoutes = require('./routes/indexRoutes'); // Importation du fichier indexRoutes centralisant toutes les routes
+const errorHandler = require('./middlewares/errorHandler'); // Importation du gestionnaire d'erreurs
 
 // Middleware pour traiter les requêtes JSON et logger les requêtes HTTP
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use('/api/tarot', indexRoutes);
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l\'API du tarot en ligne');
 });
+
+// Middleware d'erreur centralisé
+app.use(errorHandler);
 
 // Synchronisation de la base de données et démarrage du serveur
 sequelize.authenticate()
@@ -45,11 +49,5 @@ sequelize.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
-
-// Middleware d'erreur
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 module.exports = app;
