@@ -45,7 +45,12 @@
   },
   "jest": {
     "testMatch": [
-      "**/tests/**/*.test.js"
+      "**/unit/**/*.test.js",
+      "**/integration/**/*.test.js"
+    ],
+    "roots": [
+      "<rootDir>/unit", 
+      "<rootDir>/integration"
     ]
   }
-}
+  }
