@@ -1,4 +1,4 @@
-// 20210405123456-tarot-cards-seeder.js
+// tarot-cards-seeder.js
 
 'use strict';
 

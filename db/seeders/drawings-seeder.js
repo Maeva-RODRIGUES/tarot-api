@@ -1,4 +1,5 @@
 // Ce script sélectionne aléatoirement un thème parmi les trois disponibles et trois cartes parmi les cartes disponibles pour créer un tirage. Il répète ce processus 10 fois pour générer 10 tirages aléatoires. Les données générées sont ensuite insérées dans la table Drawings à l’aide de queryInterface.bulkInsert.
+// drawings-seedersjs
 
 'use strict';
 

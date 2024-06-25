@@ -49,16 +49,16 @@ sequelize.sync()
     console.log('Models synchronized with the database.');
 
     // Création des rôles après la synchronisation
-    return Role.bulkCreate([
-      { role_name: 'Admin' },
-      { role_name: 'User' }
-    ]);
-  })
-  .then(() => {
-    console.log('Roles created');
-  })
-  .catch(err => {
-    console.error('Error syncing database or creating roles:', err);
+  //   return Role.bulkCreate([
+  //     { role_name: 'Admin' },
+  //     { role_name: 'User' }
+  //   ]);
+  // })
+  // .then(() => {
+  //   console.log('Roles created');
+  // })
+  // .catch(err => {
+  //   console.error('Error syncing database or creating roles:', err);
   });
 
 // Exporter les modèles et l'instance de Sequelize

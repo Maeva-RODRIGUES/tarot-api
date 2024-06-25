@@ -1,3 +1,5 @@
+// themes-seeder.js
+
 'use strict';
 
 const themes = require('../themesMock');
