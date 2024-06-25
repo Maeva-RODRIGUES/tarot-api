@@ -19,7 +19,6 @@ const sequelize = new Sequelize(
 
 const Card = require('./cardsModel')(sequelize, DataTypes);
 const Theme = require('./themesModels')(sequelize, DataTypes);
-const Interpretation = require('./interpretationsModels')(sequelize, DataTypes);
 const User = require('./usersModels')(sequelize, DataTypes);
 const Review = require('./reviewsModels')(sequelize, DataTypes);
 const Role = require('./rolesModels')(sequelize, DataTypes);
@@ -68,7 +67,6 @@ module.exports = {
     Sequelize,
     Card,
     Drawing,
-    Interpretation,
     Review,
     Role,
     Theme,
