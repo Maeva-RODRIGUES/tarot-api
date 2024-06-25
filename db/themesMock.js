@@ -1,4 +1,4 @@
-//themesMock.js : Mock de doonnées initiales des interprétations générales par thème
+//themesMock.js : Mock de données initiales des interprétations générales par thème
 
 const themes = [
     {
