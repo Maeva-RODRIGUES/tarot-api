@@ -10,7 +10,7 @@ const { User } = require('../models/indexModels');
 
 // Générer un token JWT avec expiration d'une heure
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' }); //jwt.sign()= algorithme HMAC SHA-256 pour signer le token.
 };
 
 // Middleware pour protéger les routes
