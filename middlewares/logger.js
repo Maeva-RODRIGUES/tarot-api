@@ -1,4 +1,6 @@
-// logger.js : fichier de configuration pour Winston où vous définirez vos transports (comme la console et les fichiers de journal). 
+//Audit et Monitoring
+// logger.js : fichier de configuration pour Winston
+
 
 const winston = require('winston');
 

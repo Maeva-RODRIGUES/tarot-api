@@ -40,6 +40,20 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Redirection vers HTTPS en production
+// if (process.env.NODE_ENV === 'production') {
+//     app.use((req, res, next) => {
+//         if (req.header('x-forwarded-proto') !== 'https') {
+//             res.redirect(`https://${req.header('host')}${req.url}`);
+//         } else {
+//             next();
+//         }
+//     });
+// }
+
+// Utilisation du middleware CSRF
+app.use(csrfProtection);
+
 // Utilisation du routeur centralisé
 app.use('/api/tarot', indexRoutes);
 
