@@ -1,8 +1,9 @@
 // Centralise et organise les importations des models.
 //indexModels.js
 
-const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
+const { Sequelize, DataTypes } = require('sequelize');
+
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données
 const sequelize = new Sequelize(
@@ -12,8 +13,11 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST, 
     dialect: 'mariadb',
-    port: process.env.DB_PORT || 3306,
-    logging: false // Désactive les logs SQL
+    port: process.env.DB_PORT || 3307,
+    logging: false, // Désactive les logs SQL
+    dialectOptions: {
+      allowPublicKeyRetrieval: true, // Permettre la récupération de la clé publique
+    }
   }
 );
 

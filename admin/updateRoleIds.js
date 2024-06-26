@@ -2,7 +2,7 @@
 // Pour exécuter le script, naviguer dans le dossier admin et utiliser la commande Node.js : cd admin node updateRoleIds.js
 // updateRoleIds.js
 
-const { Role } = require('..models/indexModels'); 
+const { Role } = require('../models/indexModels'); 
 
 async function updateRoleIds() {
   // Trouver le rôle 'Admin' et mettre à jour son ID à 1
