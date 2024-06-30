@@ -8,12 +8,12 @@ describe('Tests pour les routes des utilisateurs', () => {
   let userId; // Variable pour stocker l'ID de l'utilisateur créé pour les tests suivants
 
   // Connexion et récupération du jeton JWT avant de lancer les tests
-  beforeAll(async () => {
-    const res = await request(app)
-      .post('/api/auth/login') // Remplacez par votre route de connexion réelle
-      .send({ username: 'votre_username', password: 'votre_mot_de_passe' }); // Utilisez des identifiants valides
-    token = res.body.token; // Stockez le jeton JWT pour l'utiliser dans les tests suivants
-  });
+  // beforeAll(async () => {
+  //   const res = await request(app)
+  //     .post('/api/auth/login') // Remplacez par votre route de connexion réelle
+  //     .send({ username: 'votre_username', password: 'votre_mot_de_passe' }); // Utilisez des identifiants valides
+  //   token = res.body.token; // Stockez le jeton JWT pour l'utiliser dans les tests suivants
+  // });
 
   // Test pour récupérer tous les utilisateurs
   it('GET /api/tarot/users renvoie tous les utilisateurs', async () => {

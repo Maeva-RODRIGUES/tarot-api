@@ -18,6 +18,7 @@ const drawingsRoutes = require ('./drawingsRoutes');
 const reviewsRoutes = require ('./reviewsRoutes');
 const usersRoutes = require ('./usersRoutes');
 const rolesRoutes = require ('./rolesRoutes');
+const authRoutes = require ('./authRoutes');
 
 
 // Monter les routes spécifiques sur le routeur principal
@@ -27,6 +28,7 @@ router.use('/drawings', protect, drawingsRoutes);
 router.use('/reviews', protect, reviewsRoutes);
 router.use('/users', protect, authorize(['admin']), usersRoutes);
 router.use('/roles', protect, authorize(['admin']), rolesRoutes);
+router.use('/auth', authRoutes);
 
 // Route pour gérer le consentement aux cookies
 router.post('/consent', (req, res) => {
