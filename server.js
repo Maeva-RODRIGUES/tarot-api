@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const portfinder = require('portfinder');
 const helmet = require('helmet'); // Middleware pour sécuriser les applications Express
 const rateLimit = require('express-rate-limit');// Middleware pour limiter le taux de requêtes
-const csrfProtection = require('./middlewares/csrfMiddleware');
+// const csrfProtection = require('./middlewares/csrfMiddleware');
 
 const app = express();
 const indexRoutes = require('./routes/indexRoutes');
@@ -52,7 +52,7 @@ app.use(limiter);
 // }
 
 // Utilisation du middleware CSRF
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 // Utilisation du routeur centralisé
 app.use('/api/tarot', indexRoutes);

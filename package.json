@@ -49,10 +49,6 @@
     "testMatch": [
       "**/unit/**/*.test.js",
       "**/integration/**/*.test.js"
-    ],
-    "roots": [
-      "<rootDir>/unit",
-      "<rootDir>/integration"
     ]
   }
 }
