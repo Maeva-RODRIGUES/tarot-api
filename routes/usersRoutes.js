@@ -1,5 +1,6 @@
 // usersRoutes.js
 
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');
 const router = express.Router();
@@ -60,6 +61,23 @@ const validate = (req, res, next) => {
     param('id').isInt().withMessage('ID doit être un entier'),
     validate,
     usersControllers.deleteUser
-  );
+  )
+
+  // Route pour l'authentification et la génération d'un jeton JWT
+router.post('/api/auth/login', (req, res) => {
+  // Ici, vous vérifierez les identifiants de l'utilisateur, par exemple :
+  const { username, password } = req.body;
+  // Simulons une vérification d'identifiants réussie :
+  if (username === 'votre_username' && password === 'votre_mot_de_passe') {
+    // Générez un jeton JWT
+    const token = jwt.sign({ userId: 1 }, 'votre_secret_jwt', { expiresIn: '1h' });
+    // Renvoyez le jeton JWT
+    res.json({ token });
+  } else {
+    // Si les identifiants sont incorrects, renvoyez une erreur
+    res.status(401).json({ message: 'Identifiants incorrects' });
+  }
+});
+
   
   module.exports = router;
