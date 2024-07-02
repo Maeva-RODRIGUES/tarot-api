@@ -1,35 +1,57 @@
-const express = require('express');
+//authControllers.js
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { User } = require('../models/usersModels'); // Assurez-vous que ce chemin mène à votre modèle d'utilisateur
-const router = express.Router();
 
-// Route pour l'authentification et la génération d'un jeton JWT
-router.post('/login', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    // Trouvez l'utilisateur par son nom d'utilisateur
-    const user = await User.findOne({ where: { username } });
+const { User } = require('../models/indexModels'); // chemin du fichier indexModels ou tous les models sont centralisés
 
-    if (!user) {
-      return res.status(401).json({ message: 'Identifiants incorrects' });
+const authControllers = {
+  login: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+
+      // Afficher les valeurs de username et password pour le débogage
+      console.log('Username:', username);
+      console.log('Password:', password);
+
+      // Rechercher l'utilisateur dans la base de données
+      const user = await User.findOne({ where: { username } });
+      
+      if (!user) {
+        return res.status(401).json({ message: 'Identifiants incorrects' });
+      }
+
+      // Comparer le mot de passe fourni avec le hachage stocké
+      const isMatch = await bcrypt.compare(password, user.passwordHash);
+
+      // Afficher le résultat de la comparaison pour le débogage
+      console.log('Password match:', isMatch);
+
+      if (isMatch) {
+        // Générer le token JWT
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+      } else {
+        res.status(401).json({ message: 'Identifiants incorrects' });
+      }
+    } catch (error) {
+      // Affichez l'erreur dans la console pour le débogage
+      console.error('Login error:', error);
+
+      // Personnaliser le message d'erreur en fonction de l'erreur capturée
+      let errorMessage = 'Une erreur interne est survenue';
+      if (error.name === 'SequelizeDatabaseError') {
+        errorMessage = 'Service de base de données temporairement indisponible';
+      } else if (error.name === 'ValidationError') {
+        errorMessage = 'Données de requête non valides';
+      }
+     
+
+      res.status(500).json({ message: errorMessage });
     }
-
-    // Vérifiez le mot de passe
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Identifiants incorrects' });
-    }
-
-    // Générez un jeton JWT
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ token });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Erreur du serveur' });
   }
-});
+};
 
-module.exports = router;
+
+module.exports = authControllers;
+

@@ -1,7 +1,7 @@
 // Configuration de la connexion à la base de données MariaDB :
 // connexionDatabase.js
 
-require('dotenv').config(); 
+require ('dotenv').config(); 
 
 module.exports = {
     database: process.env.DB_NAME,

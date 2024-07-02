@@ -18,7 +18,7 @@ const drawingsRoutes = require ('./drawingsRoutes');
 const reviewsRoutes = require ('./reviewsRoutes');
 const usersRoutes = require ('./usersRoutes');
 const rolesRoutes = require ('./rolesRoutes');
-const authRoutes = require ('./authRoutes');
+const authRoutes = require('./authRoutes');
 
 
 // Monter les routes spécifiques sur le routeur principal

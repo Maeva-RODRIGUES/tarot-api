@@ -6,6 +6,7 @@ const reviewsControllers = require('./reviewsControllers');
 const rolesControllers = require('./rolesControllers');
 const themesControllers = require('./themesControllers');
 const usersControllers = require('./usersControllers');
+const authControllers = require('./authControllers');
 
 module.exports = {
     cardsControllers,
@@ -13,5 +14,6 @@ module.exports = {
     reviewsControllers,
     rolesControllers,
     themesControllers,
-    usersControllers
+    usersControllers,
+    authControllers
 };

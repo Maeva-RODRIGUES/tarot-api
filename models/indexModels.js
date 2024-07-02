@@ -17,6 +17,7 @@ const sequelize = new Sequelize(
     logging: false, // Désactive les logs SQL
     dialectOptions: {
       allowPublicKeyRetrieval: true, // Permettre la récupération de la clé publique
+      connectTimeout: 60000, // augmenter le délai d'attente à 60 secondes
     }
   }
 );
