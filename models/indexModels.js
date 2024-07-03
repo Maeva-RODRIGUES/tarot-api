@@ -3,21 +3,23 @@
 
 require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
-
+const dbUser = 'tarotadmin';
+const dbName = 'tarot';
+const dbPass = 'XwCqa9Yj!4KR!xqvRP.a';
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données
 const sequelize = new Sequelize(
-  process.env.DB_NAME, 
-  process.env.DB_USER, 
-  process.env.DB_PASS, 
+  dbName,  
+  dbUser,   
+  dbPass,
   {
-    host: process.env.DB_HOST, 
+    host: 'localhost',
     dialect: 'mariadb',
     port: process.env.DB_PORT || 3307,
     logging: false, // Désactive les logs SQL
     dialectOptions: {
       allowPublicKeyRetrieval: true, // Permettre la récupération de la clé publique
-      connectTimeout: 60000, // augmenter le délai d'attente à 60 secondes
+      connectTimeout: 90000, // augmenter le délai d'attente à 60 secondes
     }
   }
 );
