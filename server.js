@@ -65,6 +65,7 @@ app.get('/', (req, res) => {
 // Middleware d'erreur centralisé
 app.use(errorHandler);
 
+
 // Vérification de la connexion à la base de données et démarrage du serveur
 sequelize.authenticate()
     .then(() => {

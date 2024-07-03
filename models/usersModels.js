@@ -56,19 +56,27 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
-    timestamps: true
+    timestamps: true,
+    hooks: {
+      // Avant de créer ou mettre à jour un utilisateur, hacher son mot de passe
+      beforeCreate: async (user) => {
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+      },
+      beforeUpdate: async (user) => {
+        if (user.changed('password')) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+
+          }
+    }
+    
   });
 
-  // Avant de créer ou mettre à jour un utilisateur, hachez son mot de passe
-  const hashPassword = async (user) => {
-    if (user.changed('password')) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(user.password, salt);
-    }
-  };
-
-  User.beforeCreate(hashPassword); // Hacher le mot de passe avant la création
-  User.beforeUpdate(hashPassword); // Hacher le mot de passe avant la mise à jour
+ 
 
 
 // Associer le modèle Role avec User
