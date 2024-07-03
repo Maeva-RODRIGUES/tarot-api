@@ -10,10 +10,10 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: 'mariadb',
-    port: process.env.DB_PORT || 3306, // Assurez-vous que le port est correct
+    port: process.env.DB_PORT || 3307, // Assurez-vous que le port est correct
     logging: false, // Désactive les logs SQL si nécessaire
     dialectOptions: {
-      // Options supplémentaires dialect
+      
     }
   }
 );

@@ -25,12 +25,12 @@ app.use(cookieParser()); // Middleware pour parser les cookies des requêtes
 
 
 // Configuration CORS
-const corsOptions = {
-    origin: ['https://yourtrusteddomain.com'], // Domaines de confiance
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  };
-  app.use(cors(corsOptions)); // Utilisation de CORS avec les options configurées
+// const corsOptions = {
+//     origin: ['https://yourtrusteddomain.com'], // Domaines de confiance
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+//   };
+//   app.use(cors(corsOptions)); // Utilisation de CORS avec les options configurées
 
 
 // Limitation du taux de requêtes

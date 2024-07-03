@@ -49,6 +49,7 @@
     "testMatch": [
       "**/unit/**/*.test.js",
       "**/integration/**/*.test.js"
-    ]
+    ],
+    "setupFiles": ["dotenv/config"]
   }
 }
