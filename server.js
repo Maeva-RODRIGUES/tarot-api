@@ -2,11 +2,21 @@
 
 require('dotenv').config();
 
+
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+
+console.log('DB_USERNAME:', DB_USERNAME); 
+console.log('DB_PASSWORD:', DB_PASSWORD);
+
+
+
+
 const { sequelize } = require('./models/indexModels');
 
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
+// const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const portfinder = require('portfinder');
 const helmet = require('helmet'); // Middleware pour sécuriser les applications Express

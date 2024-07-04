@@ -1,7 +1,7 @@
-// roles.test.js
+// rolesRoutes.test.js
 
 const request = require('supertest');
-const app = require('../server');
+const app = require('../../server');
 
 describe('Tests pour les routes des rôles', () => {
   let roleId; // Variable pour stocker l'ID du rôle créé pour les tests suivants
