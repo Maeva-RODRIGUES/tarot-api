@@ -76,15 +76,9 @@ module.exports = (sequelize, DataTypes) => {
     
   });
 
- 
-
-
-// Associer le modèle Role avec User
-User.associate = models => {
-  User.belongsTo(models.Role, {
-    foreignKey: 'id_Roles',
-    as: 'role'
-  });
+ // Définir l'association entre User et Role
+ User.associate = function(models) {
+  User.belongsTo(models.Role, { foreignKey: 'id_Roles', as: 'role' });
 };
 
 

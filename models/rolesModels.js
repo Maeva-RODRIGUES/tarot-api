@@ -19,6 +19,16 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
+
+// Définir l'association entre Role et User
+Role.associate = function(models) {
+  Role.hasMany(models.User, { foreignKey: 'id_Roles', as: 'users' });
+};
+
+return Role;
+
+
+
   return Role;
 };
 

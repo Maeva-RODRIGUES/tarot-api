@@ -21,15 +21,6 @@ const rolesRoutes = require ('./rolesRoutes');
 const authRoutes = require('./authRoutes');
 
 
-// Monter les routes spécifiques sur le routeur principal
-router.use('/cards', protect, cardsRoutes);
-router.use('/themes', protect, themesRoutes);
-router.use('/drawings', protect, drawingsRoutes);
-router.use('/reviews', protect, reviewsRoutes);
-router.use('/users', protect, authorize(['admin']), usersRoutes);
-router.use('/roles', protect, authorize(['admin']), rolesRoutes);
-router.use('/auth', authRoutes);
-
 // Route pour gérer le consentement aux cookies
 router.post('/consent', (req, res) => {
     const { consent } = req.body;
@@ -57,5 +48,22 @@ router.get('/user', (req, res) => {
 
 // Middleware pour gérer les erreurs
 router.use(errorHandler);
+
+
+// Monter les routes spécifiques sur le routeur principal
+router.use('/cards', cardsRoutes);
+router.use('/themes', themesRoutes);
+router.use('/drawings', drawingsRoutes);
+router.use('/reviews', reviewsRoutes);
+
+// Routes des rôles (accessible uniquement aux admins)
+router.use('/roles', protect, authorize(['admin']), rolesRoutes);
+
+// / Routes des rôles pour tous admin + users
+router.use('/users', usersRoutes);
+
+// Routes d'authentification
+router.use('/auth', authRoutes);
+
 
 module.exports = router;

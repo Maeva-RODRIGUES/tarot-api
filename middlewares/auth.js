@@ -18,28 +18,44 @@ const protect = (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded; // Attacher l'utilisateur décodé à la requête
-      next();
-    } catch (error) {
-      res.status(401).json({ message: 'Non autorisé, token invalide' });
-    }
+      try {
+          token = req.headers.authorization.split(' ')[1];
+          console.log('Token reçu :', token); // Vérifiez le token reçu depuis l'en-tête Authorization
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          console.log('Token décodé :', decoded); // Vérifiez le token décodé pour voir les informations utilisateur
+          req.user = decoded; // Attacher l'utilisateur décodé à la requête
+          next();
+      } catch (error) {
+          console.error('Erreur de vérification du token :', error);
+          res.status(401).json({ message: 'Non autorisé, token invalide' });
+      }
   } else {
-    res.status(401).json({ message: 'Non autorisé, pas de token' });
+      res.status(401).json({ message: 'Non autorisé, pas de token' });
   }
 };
 
 const authorize = (roles) => {
   return async (req, res, next) => {
     try {
+      // Recherche de l'utilisateur par son ID avec inclusion du rôle associé
       const user = await User.findByPk(req.user.id, { include: 'role' });
+      console.log('Utilisateur trouvé :', user);
+
+      // Vérification si l'utilisateur existe
+      if (!user) {
+        return res.status(401).json({ message: 'Utilisateur non trouvé' });
+      }
+      console.log('Rôle de l\'utilisateur :', user.role.role_name);
+
+      // Vérification si le rôle de l'utilisateur est inclus dans les rôles autorisés
       if (!roles.includes(user.role.role_name)) {
         return res.status(403).json({ message: 'Accès interdit' });
       }
+
+      // Autorisation accordée, passer au middleware suivant
       next();
     } catch (error) {
+      console.error('Erreur d\'autorisation :', error);
       res.status(500).json({ message: 'Erreur d\'autorisation' });
     }
   };

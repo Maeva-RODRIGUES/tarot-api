@@ -3,17 +3,15 @@
 
 require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
-const dbUser = 'tarotadmin';
-const dbName = 'tarot';
-const dbPass = 'XwCqa9Yj!4KR!xqvRP.a';
+
 
 // Création d'une nouvelle instance de Sequelize avec la configuration de la base de données
 const sequelize = new Sequelize(
-  dbName,  
-  dbUser,   
-  dbPass,
+  process.env.DB_NAME, 
+  process.env.DB_USERNAME, 
+  process.env.DB_PASSWORD, 
   {
-    host: 'localhost',
+    host: process.env.DB_HOST, 
     dialect: 'mariadb',
     port: process.env.DB_PORT || 3307,
     logging: false, // Désactive les logs SQL
@@ -30,6 +28,12 @@ const User = require('./usersModels')(sequelize, DataTypes);
 const Review = require('./reviewsModels')(sequelize, DataTypes);
 const Role = require('./rolesModels')(sequelize, DataTypes);
 const Drawing = require('./drawingsModels')(sequelize, DataTypes);
+
+
+// Appel des fonctions associate pour définir les associations
+User.associate({ Role });
+Role.associate({ User });
+
 
 // Définir les relations
 Role.hasMany(User, { foreignKey: 'id_Roles' });
@@ -56,6 +60,9 @@ sequelize.sync()
     console.log('Models synchronized with the database.');
 
   });
+
+  
+
 
 // Exporter les modèles et l'instance de Sequelize
 module.exports = {

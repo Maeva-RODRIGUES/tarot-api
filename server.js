@@ -3,29 +3,22 @@
 require('dotenv').config();
 
 
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-
-console.log('DB_USERNAME:', DB_USERNAME); 
-console.log('DB_PASSWORD:', DB_PASSWORD);
-
-
-
-
 const { sequelize } = require('./models/indexModels');
 
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
-// const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const portfinder = require('portfinder');
 const helmet = require('helmet'); // Middleware pour sécuriser les applications Express
 const rateLimit = require('express-rate-limit');// Middleware pour limiter le taux de requêtes
 // const csrfProtection = require('./middlewares/csrfMiddleware');
 
-const app = express();
+
 const indexRoutes = require('./routes/indexRoutes');
 const errorHandler = require('./middlewares/errorHandler');
+
+const app = express();
 
 // Middleware pour sécuriser l'application Express
 app.use(helmet()); // Utilisation de Helmet pour configurer divers en-têtes HTTP sécurisés
@@ -35,12 +28,13 @@ app.use(cookieParser()); // Middleware pour parser les cookies des requêtes
 
 
 // Configuration CORS
-// const corsOptions = {
-//     origin: ['https://yourtrusteddomain.com'], // Domaines de confiance
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     allowedHeaders: ['Content-Type', 'Authorization']
-//   };
-//   app.use(cors(corsOptions)); // Utilisation de CORS avec les options configurées
+const corsOptions = {
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  };
+
+  app.use(cors(corsOptions)); // Utilisation de CORS avec les options configurées
 
 
 // Limitation du taux de requêtes
