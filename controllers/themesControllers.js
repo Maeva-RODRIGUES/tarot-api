@@ -6,12 +6,14 @@ const themesControllers = {
     // Récupérer tous les thèmes
     getAllThemes: async (req, res) => {
         try {
-            const themes = await Theme.findAll();
-            res.status(200).json(themes);
+          const themes = await Theme.findAll({
+            attributes: ['id', 'title_theme', 'meaning_theme'] // Sélection explicite des colonnes à retourner
+          });
+          res.status(200).json(themes);
         } catch (error) {
-            res.status(500).json({ message: 'Erreur lors de la récupération des thèmes', error });
+          res.status(500).json({ message: 'Erreur lors de la récupération des thèmes', error });
         }
-    },
+      },
 
     // Récupérer un thème spécifique par son ID
     getThemeById: async (req, res) => {
@@ -39,18 +41,28 @@ const themesControllers = {
 
     // Mettre à jour un thème par son ID
     updateTheme: async (req, res) => {
+        // Récupère l'ID du thème à mettre à jour à partir des paramètres de la requête
         const id = req.params.id;
+    
         try {
-            const [updatedCount, updatedThemes] = await Theme.update(req.body, {
-                where: { id: id },
-                returning: true, // pour retourner les données mises à jour
+            // Effectue la mise à jour du thème dans la base de données
+            const updatedCount = await Theme.update(req.body, {
+                where: { id: id }, // Condition de mise à jour basée sur l'ID
             });
-            if (updatedCount > 0) {
-                res.json({ message: 'Thème mis à jour avec succès', updatedThemes });
+    
+            // Vérifie si au moins un enregistrement a été mis à jour
+            if (updatedCount[0] > 0) {
+                // Si oui, récupère le thème mis à jour à partir de la base de données
+                const updatedTheme = await Theme.findOne({ where: { id: id } });
+                // Renvoie une réponse JSON avec le message de succès et le thème mis à jour
+                res.json({ message: 'Thème mis à jour avec succès', updatedTheme });
             } else {
+                // Si aucun enregistrement n'a été mis à jour, renvoie une erreur 404
                 res.status(404).send('Thème non trouvé ou pas de changement effectué');
             }
         } catch (error) {
+            // En cas d'erreur lors de la mise à jour du thème, logue l'erreur et renvoie une réponse d'erreur 500
+            console.error('Erreur lors de la mise à jour du thème :', error);
             res.status(500).json({ message: 'Erreur lors de la mise à jour du thème', error });
         }
     },

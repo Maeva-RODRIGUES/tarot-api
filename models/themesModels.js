@@ -18,9 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
-    
+    // Définir les options du modèle
+    timestamps: false, // Désactiver les timestamps (createdAt et updatedAt)
+    underscored: true, // Utiliser la convention underscored pour les noms de colonnes
+    tableName: 'Themes' // Nom de la table dans la base de données (si différent du nom du modèle)
   });
 
   return Theme;
+  
 };
-
