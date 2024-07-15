@@ -61,7 +61,7 @@ const themesControllers = {
                 res.status(404).send('Thème non trouvé ou pas de changement effectué');
             }
         } catch (error) {
-            // En cas d'erreur lors de la mise à jour du thème, logue l'erreur et renvoie une réponse d'erreur 500
+            // En cas d'erreur lors de la mise à jour du thème, log l'erreur et renvoie une réponse d'erreur 500
             console.error('Erreur lors de la mise à jour du thème :', error);
             res.status(500).json({ message: 'Erreur lors de la mise à jour du thème', error });
         }
