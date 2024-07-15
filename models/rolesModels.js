@@ -2,8 +2,6 @@
 // Utilité: Permet de gérer les rôles des utilisateurs dans la base de données.
 // rolesModels.js
 
-const { Sequelize } = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {
     id: {
@@ -28,8 +26,6 @@ Role.associate = function(models) {
 return Role;
 
 
-
-  return Role;
 };
 
 

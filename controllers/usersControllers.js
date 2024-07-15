@@ -41,15 +41,18 @@ const usersControllers = {
     updateUser: async (req, res) => {
         const id = req.params.id;
         try {
-            const [updatedCount, updatedUsers] = await User.update(req.body, {
-                where: { id: id },
-                returning: true, // pour retourner les données mises à jour
-            });
-            if (updatedCount > 0) {
-                res.json({ message: 'Utilisateur mis à jour avec succès', updatedUsers });
-            } else {
-                res.status(404).send('Utilisateur non trouvé ou pas de changement effectué');
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).send('Utilisateur non trouvé');
             }
+    
+            // Mettre à jour uniquement les champs fournis dans req.body
+            await user.update(req.body);
+    
+            // Recharger les données mises à jour
+            const updatedUser = await User.findByPk(id);
+    
+            res.json({ message: 'Utilisateur mis à jour avec succès', updatedUser });
         } catch (error) {
             res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'utilisateur', error });
         }

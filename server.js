@@ -27,15 +27,8 @@ app.use(morgan('dev')); // Logging détaillé des requêtes HTTP dans la console
 app.use(cookieParser()); // Middleware pour parser les cookies des requêtes
 
 
-// Configuration CORS
-const corsOptions = {
-    origin: '*', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  };
-
-  app.use(cors(corsOptions)); // Utilisation de CORS avec les options configurées
-
+//Utilisation de CORS avec les options par défaut
+app.use(cors());
 
 // Limitation du taux de requêtes
 const limiter = rateLimit({

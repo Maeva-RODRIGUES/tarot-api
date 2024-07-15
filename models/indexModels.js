@@ -36,8 +36,8 @@ Role.associate({ User });
 
 
 // Définir les relations
-Role.hasMany(User, { foreignKey: 'id_Roles' });
-User.belongsTo(Role, { foreignKey: 'id_Roles' });
+Role.hasMany(User, { foreignKey: 'id_Roles', as: 'user' }); // Utilisation de 'user' pour l'alias de Role.hasMany, l'alias doit être unique
+User.belongsTo(Role, { foreignKey: 'id_Roles', as: 'userRole' }); // Utilisation de 'userRole' pour l'alias de User.belongsTo
 
 Theme.hasMany(Drawing, { foreignKey: 'id_Themes' });
 Drawing.belongsTo(Theme, { foreignKey: 'id_Themes' });

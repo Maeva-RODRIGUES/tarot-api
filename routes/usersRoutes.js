@@ -16,10 +16,10 @@ const validate = (req, res, next) => {
 };
 
 // Route pour la récupération de tous les utilisateurs (accessible uniquement aux admins)
-router.get('/', protect, authorize(['admin']), usersController.getAllUsers);
+router.get('/', protect, authorize(['Admin']), usersController.getAllUsers);
 
 // Route pour la récupération d'un utilisateur par son ID (accessible uniquement aux admins)
-router.get('/:id', protect, authorize(['admin']), 
+router.get('/:id', protect, authorize(['Admin']), 
     param('id').isInt().withMessage('ID doit être un entier'),
     validate,
     usersController.getUserById
@@ -42,7 +42,7 @@ router.post('/',
 // Route pour mettre à jour un utilisateur par son ID (accessible uniquement aux admins)
 router.put('/:id',
     protect,
-    authorize(['admin']),
+    authorize(['Admin']),
     param('id').isInt().withMessage('ID doit être un entier'),
     body('name').optional().notEmpty().withMessage('Le nom ne peut pas être vide'),
     body('surname').optional().notEmpty().withMessage('Le prénom ne peut pas être vide'),
@@ -58,7 +58,7 @@ router.put('/:id',
 // Route pour supprimer un utilisateur par son ID (accessible uniquement aux admins)
 router.delete('/:id',
     protect,
-    authorize(['admin']),
+    authorize(['Admin']),
     param('id').isInt().withMessage('ID doit être un entier'),
     validate,
     usersController.deleteUser

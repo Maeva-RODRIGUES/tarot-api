@@ -57,7 +57,7 @@ router.use('/drawings', drawingsRoutes);
 router.use('/reviews', reviewsRoutes);
 
 // Routes des rôles (accessible uniquement aux admins)
-router.use('/roles', protect, authorize(['admin']), rolesRoutes);
+router.use('/roles', protect, authorize(['Admin']), rolesRoutes);
 
 // / Routes des rôles pour tous admin + users
 router.use('/users', usersRoutes);
