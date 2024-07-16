@@ -3,9 +3,13 @@
 
 const express = require('express');
 const router = express.Router();
+const uploadRoutes = require('./uploadRoutes');
 const cookieParser = require('cookie-parser');
 const { protect, authorize } = require('../middlewares/auth'); // Importer les middlewares protect et authorize
 const errorHandler = require('../middlewares/errorHandler'); // Importer le middleware errorHandler
+
+// Utiliser les routes de téléchargement
+router.use('/api', uploadRoutes);
 
 
 // Utiliser le middleware cookie-parser pour gérer les cookies

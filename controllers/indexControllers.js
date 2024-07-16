@@ -7,6 +7,7 @@ const rolesControllers = require('./rolesControllers');
 const themesControllers = require('./themesControllers');
 const usersControllers = require('./usersControllers');
 const authControllers = require('./authControllers');
+const uploadControllers = require('./uploadControllers');
 
 
 
@@ -18,4 +19,5 @@ module.exports = {
     themesControllers,
     usersControllers,
     authControllers,
+    uploadControllers,
 };
