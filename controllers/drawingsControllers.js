@@ -1,114 +1,88 @@
 // drawingsController.js : logique métier des tirages de cartes
 
-const { Card, Theme, Drawing } = require('../models/indexModels');
-const themes = require('../db/Mock/themesMock');
+const { Drawing, Card, Theme } = require('../models/indexModels');
 
 
-// Fonction drawRandomCard pour sélectionner une carte aléatoire dans le jeu de tarot
-function drawRandomCard(tarotDeck) {
-    const randomIndex = Math.floor(Math.random() * tarotDeck.length);
-    return tarotDeck[randomIndex];
+// Fonction pour mélanger un tableau (algorithme Fisher-Yates)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
-// Fonction drawCards pour effectuer un tirage de tarot
-exports.drawCards = async (req, res) => {
+// Récupérer tous les tirages de tarot
+exports.getAllDrawings = async (req, res) => {
     try {
-        const tarotDeck = cardsData;
-        
-        // Sélection aléatoire de trois cartes
-        const pastCard = drawRandomCard(tarotDeck);
-        const presentCard = drawRandomCard(tarotDeck);
-        const futureCard = drawRandomCard(tarotDeck);
-
-        // Envoyer la réponse au client avec les cartes tirées
-        res.json({ message: 'Tirage de tarot effectué avec succès', cards: [pastCard, presentCard, futureCard] });
+        const drawings = await Drawing.findAll();
+        res.json(drawings);
     } catch (error) {
-        // En cas d'erreur, renvoyer un message d'erreur au client
-        res.status(500).json({ message: 'Erreur lors du tirage de tarot', error });
+        res.status(500).json({ message: 'Erreur lors de la récupération des tirages de tarot', error });
     }
 };
 
-// Fonction pour effectuer un tirage de tarot aléatoire basé sur le thème "Amour"
-exports.drawRandomCards = async (req, res) => {
+// Créer un tirage aléatoire de 3 cartes basé sur le thème choisi
+exports.createRandomDrawingByTheme = async (req, res) => {
     try {
-        const themeName = "Amour"; // Le thème "Amour"
-        const theme = themes.find(t => t.title_theme === themeName);
+        console.log('Corps de la requête :', req.body);
 
-        if (!theme) {
-            return res.status(400).json({ message: "Thème 'Amour' non trouvé" });
-        }
-
-        const tarotDeck = cardsData.filter(card => theme.meaning_theme.includes(card.name));
-
-        // Sélection aléatoire de trois cartes
-        const randomCards = [];
-        while (randomCards.length < 3) {
-            const randomCard = drawRandomCard(tarotDeck);
-            if (!randomCards.some(card => card.name === randomCard.name)) {
-                randomCards.push(randomCard);
-            }
-        }
-
-        // Envoyer la réponse au client avec les cartes tirées du thème "Amour"
-        res.json({ message: 'Tirage de tarot aléatoire effectué avec succès', cards: randomCards, interpretation: theme.meaning_theme });
-    } catch (error) {
-        // En cas d'erreur, renvoyer un message d'erreur au client
-        res.status(500).json({ message: 'Erreur lors du tirage de tarot aléatoire', error });
-    }
-};
-
-// Fonction drawThemeCards pour effectuer un tirage de tarot en fonction du thème choisi
-exports.drawThemeCards = async (req, res) => {
-    try {
         const themeName = req.params.theme;
+        console.log(`Recherche du thème : ${themeName}`);
 
-        const theme = themes.find(t => t.title_theme === themeName);
-
-        // Vérifier si le thème choisi est valide
+        const theme = await Theme.findOne({ where: { title_theme: themeName } });
         if (!theme) {
+            console.error(`Thème non trouvé : ${themeName}`);
             return res.status(400).json({ message: "Thème invalide" });
         }
+        console.log(`Thème trouvé : ${theme.title_theme}`);
 
-        const tarotDeck = cardsData.filter(card => theme.meaning_theme.includes(card.name));
+        // Tirer toutes les cartes disponibles
+        const tarotDeck = await Card.findAll();
+        console.log(`Nombre total de cartes disponibles : ${tarotDeck.length}`);
 
-        // Sélection aléatoire de trois cartes associées au thème choisi
-        const randomCards = [];
-        while (randomCards.length < 3) {
-            const randomCard = drawRandomCard(tarotDeck);
-            if (!randomCards.some(card => card.name === randomCard.name)) {
-                randomCards.push(randomCard);
-            }
+        // Mélanger le deck
+        const shuffledDeck = shuffleArray(tarotDeck);
+
+        // Sélectionner les 3 premières cartes après le mélange
+        const randomCards = shuffledDeck.slice(0, 3);
+
+        // Utiliser le champ 'meaning_theme' pour récupérer une interprétation aléatoire
+        const interpretations = JSON.parse(theme.meaning_theme);
+        const randomInterpretation = interpretations[Math.floor(Math.random() * interpretations.length)];
+
+        // Vérifiez que req.user est défini
+        if (!req.user) {
+            return res.status(401).json({ message: 'Utilisateur non authentifié' });
         }
 
-        // Envoyer la réponse au client avec les cartes tirées et leur interprétation
-        res.json({ message: `Tirage de tarot pour le thème ${themeName} effectué avec succès`, cards: randomCards, interpretation: theme.meaning_theme });
-    } catch (error) {
-        // En cas d'erreur, renvoyer un message d'erreur au client
-        res.status(500).json({ message: 'Erreur lors du tirage de tarot pour le thème choisi', error });
-    }
-};
-
-// Fonction pour mettre à jour un tirage spécifique par son ID
-exports.updateDrawingById = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const updatedDrawing = await Drawing.update(req.body, {
-            where: { id: id },
-            returning: true, // Renvoyer le tirage mis à jour
+        // Créer le tirage en incluant l'interprétation dans le champ 'cards'
+        const newDrawing = await Drawing.create({
+            date: new Date(),
+            cards: JSON.stringify({
+                cards: randomCards,
+                interpretation: randomInterpretation
+            }),
+            id_Themes: theme.id,
+            id_Users: req.user.id
         });
 
-        if (updatedDrawing[0] === 1) {
-            res.json({ message: 'Tirage mis à jour avec succès', updatedDrawing: updatedDrawing[1][0] });
-        } else {
-            res.status(404).send('Tirage non trouvé ou pas de changement effectué');
-        }
+        // Associer les cartes au tirage
+        await newDrawing.addCards(randomCards);
+
+        res.status(201).json({ 
+            message: 'Tirage aléatoire créé avec succès', 
+            drawing: newDrawing
+        });
     } catch (error) {
-        console.error('Erreur lors de la mise à jour du tirage :', error);
-        res.status(500).json({ message: 'Erreur lors de la mise à jour du tirage', error });
+        console.error('Erreur lors de la création du tirage aléatoire :', error);
+        res.status(500).json({ message: 'Erreur lors de la création du tirage aléatoire', error });
     }
 };
 
-// Fonction pour supprimer un tirage spécifique par son ID
+
+
+// Supprimer un tirage spécifique par son ID
 exports.deleteDrawingById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -125,22 +99,4 @@ exports.deleteDrawingById = async (req, res) => {
     }
 };
 
-// Fonction pour créer un nouveau tirage de tarot
-exports.createDrawing = async (req, res) => {
-    try {
-      // Utilisez les données reçues dans la requête pour créer un tirage
-      const newDrawing = await Drawing.create({
-        date: req.body.date,
-        cards: req.body.cards,
-        id_Themes: req.body.id_Themes,
-        id_Users: req.body.id_Users
-      });
-      // Renvoyez l'ID du nouveau tirage dans la réponse
-      res.status(201).json({ id: newDrawing.id, ...newDrawing.get({ plain: true }) });
-    } catch (error) {
-      // Gérez les erreurs potentielles
-      res.status(500).json({ message: 'Erreur lors de la création du tirage', error });
-    }
-  };
-
-  
+module.exports.shuffleArray = shuffleArray;

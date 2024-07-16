@@ -6,6 +6,7 @@ const logger = require('./logger'); // Importer la configuration Winston
 // Middleware pour gérer les erreurs
 const errorHandler = (err, req, res, next) => {
   logger.error(`${err.statusCode || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+  console.log('Erreur enregistrée dans le fichier error.log'); // Log de débogage
 
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Une erreur est survenue sur le serveur';
@@ -30,6 +31,7 @@ const errorHandler = (err, req, res, next) => {
     },
   });
 };
+
 
 module.exports = errorHandler;
   

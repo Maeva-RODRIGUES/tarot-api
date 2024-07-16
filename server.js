@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const portfinder = require('portfinder');
 const helmet = require('helmet'); // Middleware pour sécuriser les applications Express
 const rateLimit = require('express-rate-limit');// Middleware pour limiter le taux de requêtes
+
 // const csrfProtection = require('./middlewares/csrfMiddleware');
 
 
@@ -25,8 +26,6 @@ app.use(helmet()); // Utilisation de Helmet pour configurer divers en-têtes HTT
 app.use(express.json()); // Middleware pour parser les données JSON des requêtes
 app.use(morgan('dev')); // Logging détaillé des requêtes HTTP dans la console (environnement de développement)
 app.use(cookieParser()); // Middleware pour parser les cookies des requêtes
-
-
 //Utilisation de CORS avec les options par défaut
 app.use(cors());
 
@@ -56,6 +55,7 @@ app.use('/api/tarot', indexRoutes);
 
 // Route de base pour afficher un message de bienvenue
 app.get('/', (req, res) => {
+    console.log('Requête reçue pour la route de base');
     res.send('Bienvenue sur l\'API du tarot en ligne');
 });
 

@@ -8,6 +8,8 @@ const themesControllers = require('./themesControllers');
 const usersControllers = require('./usersControllers');
 const authControllers = require('./authControllers');
 
+
+
 module.exports = {
     cardsControllers,
     drawingsControllers,
@@ -15,5 +17,5 @@ module.exports = {
     rolesControllers,
     themesControllers,
     usersControllers,
-    authControllers
+    authControllers,
 };

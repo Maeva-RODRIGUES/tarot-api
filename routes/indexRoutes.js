@@ -51,16 +51,16 @@ router.use(errorHandler);
 
 
 // Monter les routes spécifiques sur le routeur principal
-router.use('/cards', cardsRoutes);
-router.use('/themes', themesRoutes);
-router.use('/drawings', drawingsRoutes);
-router.use('/reviews', reviewsRoutes);
+router.use('/cards', protect, cardsRoutes);
+router.use('/themes', protect, themesRoutes);
+router.use('/drawings', protect,  drawingsRoutes);
+router.use('/reviews', protect,  reviewsRoutes);
 
 // Routes des rôles (accessible uniquement aux admins)
 router.use('/roles', protect, authorize(['Admin']), rolesRoutes);
 
-// / Routes des rôles pour tous admin + users
-router.use('/users', usersRoutes);
+// / Routes des utilisateurs pour tous admin + users
+router.use('/users', protect, authorize(['Admin', 'User']), usersRoutes);
 
 // Routes d'authentification
 router.use('/auth', authRoutes);

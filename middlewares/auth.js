@@ -3,16 +3,17 @@
 // auth.js contient les implémentations des fonctions nécessaires pour gérer les authentifications comme : Créer et vérifier les tokens JWT pour sécuriser les routes.
 
 const jwt = require('jsonwebtoken');
-
 const { User } = require('../models/indexModels');
+
+
 
 // Générer un token JWT avec expiration d'une heure
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' }); //jwt.sign()= algorithme HMAC SHA-256 pour signer le token.
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 // Middleware pour protéger les routes
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -21,7 +22,14 @@ const protect = (req, res, next) => {
           console.log('Token reçu :', token); // Vérifiez le token reçu depuis l'en-tête Authorization
           const decoded = jwt.verify(token, process.env.JWT_SECRET);
           console.log('Token décodé :', decoded); // Vérifiez le token décodé pour voir les informations utilisateur
-          req.user = decoded; // Attacher l'utilisateur décodé à la requête
+
+          // Rechercher l'utilisateur dans la base de données
+          const user = await User.findByPk(decoded.id);
+          if (!user) {
+              return res.status(401).json({ message: 'Utilisateur non trouvé' });
+          }
+
+          req.user = user; // Attacher l'utilisateur trouvé à la requête
           next();
       } catch (error) {
           console.error('Erreur de vérification du token :', error);
