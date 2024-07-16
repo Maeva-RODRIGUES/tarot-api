@@ -9,7 +9,7 @@ const { protect, authorize } = require('../middlewares/auth'); // Importer les m
 const errorHandler = require('../middlewares/errorHandler'); // Importer le middleware errorHandler
 
 // Utiliser les routes de téléchargement
-router.use('/api', uploadRoutes);
+router.use('/upload', uploadRoutes);
 
 
 // Utiliser le middleware cookie-parser pour gérer les cookies

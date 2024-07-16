@@ -20,3 +20,5 @@
 
 {"level":"error","message":"400 - Unexpected non-whitespace character after JSON at position 38 (line 4 column 6) - /api/tarot/drawings/1 - PUT - ::1","timestamp":"2024-07-16T12:50:23.913Z"}
 {"level":"error","message":"400 - Unexpected non-whitespace character after JSON at position 766 (line 7 column 6) - /api/tarot/drawings/1 - PUT - ::1","timestamp":"2024-07-16T12:52:26.667Z"}
+{"level":"error","message":"500 - ENOENT: no such file or directory, open 'C:\\Users\\pc\\Desktop\\DEV\\B_PROJETS SITES\\2_PROJET LA ROUE DU DESTIN\\BACK\\CODE\\tarot-api\\uploads\\1721149259487-1_lemagicien.PNG' - /api/tarot/api/upload - POST - ::1","timestamp":"2024-07-16T17:00:59.496Z"}
+{"level":"error","message":"500 - ENOENT: no such file or directory, open 'C:\\Users\\pc\\Desktop\\DEV\\B_PROJETS SITES\\2_PROJET LA ROUE DU DESTIN\\BACK\\CODE\\tarot-api\\uploads\\1721149718540-1_lemagicien.PNG' - /api/tarot/upload - POST - ::1","timestamp":"2024-07-16T17:08:38.544Z"}
