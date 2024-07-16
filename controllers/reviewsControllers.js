@@ -40,21 +40,30 @@ const reviewsControllers = {
     // Mettre à jour un avis par son ID
     updateReview: async (req, res) => {
         const id = req.params.id;
+    
         try {
-            const [updatedCount, updatedReviews] = await Review.update(req.body, {
-                where: { id: id },
-                returning: true, // pour retourner les données mises à jour
+            // Effectue la mise à jour de l'avis dans la base de données
+            const updatedCount = await Review.update(req.body, {
+                where: { id: id }, // Condition de mise à jour basée sur l'ID
             });
-            if (updatedCount > 0) {
-                res.json({ message: 'Avis mis à jour avec succès', updatedReviews });
+    
+            // Vérifie si au moins un enregistrement a été mis à jour
+            if (updatedCount[0] > 0) {
+                // Si oui, récupère l'avis mis à jour à partir de la base de données
+                const updatedReview = await Review.findOne({ where: { id: id } });
+                // Renvoie une réponse JSON avec le message de succès et l'avis mis à jour
+                res.json({ message: 'Avis mis à jour avec succès', updatedReview });
             } else {
+                // Si aucun enregistrement n'a été mis à jour, renvoie une erreur 404
                 res.status(404).send('Avis non trouvé ou pas de changement effectué');
             }
         } catch (error) {
+            // En cas d'erreur lors de la mise à jour de l'avis, log l'erreur et renvoie une réponse d'erreur 500
+            console.error('Erreur lors de la mise à jour de l\'avis :', error);
             res.status(500).json({ message: 'Erreur lors de la mise à jour de l\'avis', error });
         }
     },
-
+    
     // Supprimer un avis par son ID
     deleteReview: async (req, res) => {
         const id = req.params.id;
