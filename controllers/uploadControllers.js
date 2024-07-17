@@ -42,24 +42,23 @@ const getFile = (req, res) => {
 
 // Fonction pour mettre à jour un fichier existant
 const updateFile = async (req, res) => {
-  const oldFilepath = path.join(__dirname, '../uploads', req.params.filename);
-  fs.unlink(oldFilepath, async (err) => {
-    if (err) {
-      return res.status(500).json({ message: 'Erreur lors de la suppression de l\'ancien fichier', error: err });
-    }
+  try {
     const { id } = req.body;
-    const imageUrl = `/uploads/${req.file.filename}`;
 
     // Mettre à jour le champ image_url dans la table cards
     const card = await Card.findByPk(id);
     if (card) {
-      card.image_url = imageUrl;
-      await card.save();
+      if (req.file) {
+        card.image_url = `/uploads/${req.file.filename}`;
+        await card.save();
+      }
       res.json({ message: 'Fichier mis à jour avec succès', file: req.file, card });
     } else {
       res.status(404).json({ message: 'Carte non trouvée' });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la mise à jour du fichier', error });
+  }
 };
 
 // Fonction pour supprimer un fichier
