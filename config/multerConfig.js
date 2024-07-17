@@ -1,6 +1,7 @@
 // multerConfig.js
 
 const multer = require('multer');
+const path = require('path'); 
 
 // Filtrage des fichiers pour n'accepter que les images
 const fileFilter = (req, file, cb) => {
